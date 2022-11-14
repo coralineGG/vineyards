@@ -34,9 +34,10 @@ canopeo_cc%>%
   geom_point()+
   geom_errorbar()+
   labs(x="Line", y="Cover rate", title = "Percentage of coverance of the soil for different cover crops")
-  #geom_pointrange(ymin=0, ymax=100, xmin=1, xmax=14) #we are not sure it will be added to the geom_dotplot()graph but that's what we want
-#we couldn't test these lines since the begining of our code doesn't work
-
+ 
 #Anova
 anova.canopeo<-lm(cover_rate~Line, canopeo_cc)
 anova(anova.canopeo)
+
+## Our P-value is > 0,05 so we cannot do a tuckey test
+
