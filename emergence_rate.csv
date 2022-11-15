@@ -1,0 +1,38 @@
+Line ;Specie ;nature;Zone 1;Zone 2;Zone 3 
+1;Weed;mix;12;22;33
+2;Barley;mix;11;24;29
+2;Mustard;mix;9;12;12
+2;Weed;mix;20;0;25
+3;Radish;mix;7;9;6
+3;Fenugreek;mix;2;11;12
+3;Weed;mix;35;5;45
+4;Barley;mix;10;20;7
+4;Faba bean;mix;3;4;3
+4;Mustard;mix;0;0;8
+4;Weed;mix;31;24;31
+5;Barley;mix;27;28;12
+5;Faba bean;mix;1;6;5
+5;Weed;mix;41;4;33
+6;Barley;mono;54;29;44
+6;Weed;mono;22;8;6
+7;Radish;mono;7;13;14
+7;Weed;mono;25;3;38
+8;Fenugreek;mono;26;11;25
+8;Weed;mono;25;9;19
+9;Radish;mix;7;7;17
+9;Barley;mix;14;21;27
+9;Weed;mix;48;7;74
+10;Fenugreek;mix;10;7;8
+10;Barley;mix;11;18;19
+10;Weed;mix;23;3;16
+11;Faba bean;mono;4;16;9
+11;Weed;mono;26;2;18
+12;Mustard;mix;9;7;6
+12;Faba bean;mix;2;7;5
+12;Weed;mix;37;3;26
+13;Radish;mix;0;0;0
+13;Barley;mix;1;1;1
+13;Fenugreek;mix;5;8;8
+13;Weed;mix;30;52;31
+14;Mustard;mono;30;45;32
+14;Weed;mono;49;43;21
