@@ -4,6 +4,7 @@ setwd("D:/études/SUPAGRO/2A/D4/github/vineyards")
 
 # library 
 library(tidyverse)
+library(agricolae)
 
 # get the data for the cover rate
 canopeo_weed_ini = read.table("data_canopeo_weeds.csv", header = TRUE, sep = ";", dec = ",")
