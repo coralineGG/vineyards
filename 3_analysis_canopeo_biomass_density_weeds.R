@@ -1,6 +1,6 @@
 # working directory
-getwd()
-setwd("D:/études/SUPAGRO/2A/D4/github/vineyards")
+# getwd()
+# setwd("D:/études/SUPAGRO/2A/D4/github/vineyards")
 
 # library 
 library(tidyverse)
@@ -13,6 +13,7 @@ view(canopeo_weed_ini)
 #in order for the data to be easier to analyse
 canopeo_weed <- canopeo_weed_ini%>%
   select (date, line, z1, z2, z3,nature)%>%
+  mutate(line = factor(line)) %>% 
   pivot_longer(cols = z1:z3, names_to = "zone",values_to = "weed_cover_rate" )
 view(canopeo_weed)
 
@@ -23,38 +24,70 @@ canopeo_weed%>%
   ggplot (aes(x = line, y = weed_cover_rate, ymin=0, ymax=100, xmin=1, xmax=14)) + 
   geom_point()
 
+#Anova
+anova.canopeo<-lm(weed_cover_rate~line, canopeo_weed)
+anova(anova.canopeo)
+
+par(mfrow = c(2,2))
+plot(anova.canopeo)
+par(mfrow = c(1,1))
+
+# Kruskal
+kruskal <- kruskal(canopeo_weed$weed_cover_rate, canopeo_weed$line, console = T)
+posthock <- kruskal$groups %>% 
+  rownames_to_column("line") %>% 
+  select(line, groups)
+
 canopeo_weed%>%
   group_by(line)%>%
   summarise(mymean=mean(weed_cover_rate, na.rm=T),
             mysd=sd(weed_cover_rate, na.rm=T))%>%
-  mutate(ymax=mymean+mysd, ymin=mymean-mysd)%>%
-  ggplot (aes(x = line, y = mymean, ymin=ymin, ymax=ymax)) + 
+  mutate(ymax=mymean+mysd, ymin=mymean-mysd) %>% 
+  full_join(posthock) %>% 
+  ggplot (aes(x = reorder(line, mymean), y = mymean, label = groups,
+              ymin=ymin, ymax=ymax)) + 
   geom_point()+
+  geom_text(aes(y = 75)) +
   geom_errorbar()+
   labs(x="Line", y="Weed cover rate", title = "Percentage of weed soil coverance when different cover crops were grown")
 
-#Anova
-anova.canopeo<-lm(weed_cover_rate~line, canopeo_weed)
-anova(anova.canopeo)
- 
+
+# posthoc <- HSD.test(anova.canopeo, "zone", group = T, console = T)
+# posthoc2 <- posthoc$group %>%
+#   rownames_to_column("zone")
+# 
+# canopeo_weed <- full_join(canopeo_weed, 
+#                           select(posthoc2, c(zone, groups)))
+# 
+# ggplot ( canopeo_weed, aes(x = zone, y = weed_cover_rate, label = groups)) + 
+#   geom_boxplot() +
+#   geom_text(aes(y = max(weed_cover_rate)+ 0.2*max(weed_cover_rate))) +
+#   labs(x="Zone", y="Weed cover rate", title = "Percentage of weed soil coverance when different cover crops were grown")
+# 
+
 # p-value > 0,05 so no tuckey test
 
 #t.test : comparing the control to all the treatments
-control_cover_rate<-canopeo_weed%>%
-  filter(line==1)
-treatment_cover_rate<-canopeo_weed%>%
-  filter(line!=1)
-
-t.test(control_cover_rate$weed_cover_rate, treatment_cover_rate$weed_cover_rate)
+# control_cover_rate<-canopeo_weed%>%
+#   filter(line==1)
+# treatment_cover_rate<-canopeo_weed%>%
+#   filter(line!=1)
+# 
+# t.test(control_cover_rate$weed_cover_rate, treatment_cover_rate$weed_cover_rate)
 
 #t.test : comparing the mono to the mix
 mono_cover_rate<-canopeo_weed%>%
   filter(nature=="mono")
-view(mono_cover_rate)
 mix_cover_rate<-canopeo_weed%>%
   filter(nature=="mix")
 
 t.test(mono_cover_rate$weed_cover_rate, mix_cover_rate$weed_cover_rate)
+
+lines <- c("6","7","8","11","14")
+testfiltre <- canopeo_weed %>% 
+  filter(line %in% lines)
+
+
 
 ###########Weed biomass################
 
