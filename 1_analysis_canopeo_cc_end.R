@@ -31,9 +31,37 @@ canopeo_cc%>%
   geom_errorbar()+
   labs(x="Line", y="Cover rate", title = "Percentage of coverance of the soil for different cover crops")
  
-#Anova
-anova.canopeo<-lm(cover_rate~Line, canopeo_cc)
-anova(anova.canopeo)
+#Anova line
+anova.canopeo.l<-lm(cover_rate~Line, canopeo_cc)
+anova(anova.canopeo.l)
+par(mfrow = c(1,1))
+plot(anova.canopeo.l)
 
-## Our P-value is > 0,05 so we cannot do a tuckey test
+## Our P-value is > 0,05 so we cannot do a tukey test
+
+#anova zone
+anova.canopeo.z<-lm(cover_rate~zone, canopeo_cc)
+anova(anova.canopeo.z)
+par(mfrow = c(1,1))
+plot(anova.canopeo.z)
+
+tukey.canopeo.1<- HSD.test(anova.biomass.z, "zone", alpha = 0.05, group=TRUE, main = NULL, 
+                           console=FALSE)
+print(tukey.canopeo.1)
+table.letters.canopeo.1 <- tukey.z$groups %>%
+  rownames_to_column("zone") %>%
+  select(zone, groups)
+view(table.letters.canopeo.1)
+
+canopeo_cc%>%
+  group_by(zone)%>%
+  summarise(mymean=mean(cover_rate, na.rm=T),
+            mysd=sd(cover_rate, na.rm=T))%>%
+  mutate(ymax=mymean+mysd, ymin=mymean-mysd)%>%
+  ggplot (aes(x = reorder(zone, mymean), y = mymean, ymin=ymin, ymax=ymax, label=groups)) + 
+  geom_point()+
+  geom_text(aes(y=20))+
+  geom_errorbar()+
+  labs(x="Zone", y="Cover rate", title = "Percentage of coverance of the soil for different cover crops")
+
 
