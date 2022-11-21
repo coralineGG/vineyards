@@ -1,0 +1,32 @@
+{
+    "id": "7BC47514",
+    "path": null,
+    "project_path": null,
+    "type": "r_dataframe",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1668527497601.0,
+    "source_on_save": false,
+    "relative_order": 4,
+    "properties": {
+        "expression": "structure(list(Line = c(1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L, 2L, 2L,  2L, 2L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 4L, 4L, 4L, 4L, 4L,  4L, 4L, 4L, 4L, 4L, 4L, 4L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L,  6L, 6L, 6L, 6L, 6L, 6L, 7L, 7L, 7L, 7L, 7L, 7L, 8L, 8L, 8L, 8L,  8L, 8L, 9L, 9L, 9L, 9L, 9L, 9L, 9L, 9L, 9L, 10L, 10L, 10L, 10L,  10L, 10L, 10L, 10L, 10L, 11L, 11L, 11L, 11L, 11L, 11L, 12L, 12L,  12L, 12L, 12L, 12L, 12L, 12L, 12L, 13L, 13L, 13L, 13L, 13L, 13L,  13L, 13L, 13L, 13L, 13L, 13L, 14L, 14L, 14L, 14L, 14L, 14L),      Specie = structure(c(6L, 6L, 6L, 1L, 1L, 1L, 4L, 4L, 4L,      6L, 6L, 6L, 5L, 5L, 5L, 3L, 3L, 3L, 6L, 6L, 6L, 1L, 1L, 1L,      2L, 2L, 2L, 4L, 4L, 4L, 6L, 6L, 6L, 1L, 1L, 1L, 2L, 2L, 2L,      6L, 6L, 6L, 1L, 1L, 1L, 6L, 6L, 6L, 5L, 5L, 5L, 6L, 6L, 6L,      3L, 3L, 3L, 6L, 6L, 6L, 5L, 5L, 5L, 1L, 1L, 1L, 6L, 6L, 6L,      3L, 3L, 3L, 1L, 1L, 1L, 6L, 6L, 6L, 2L, 2L, 2L, 6L, 6L, 6L,      4L, 4L, 4L, 2L, 2L, 2L, 6L, 6L, 6L, 5L, 5L, 5L, 1L, 1L, 1L,      3L, 3L, 3L, 6L, 6L, 6L, 4L, 4L, 4L, 6L, 6L, 6L), .Label = c(\"Barley\",      \"Faba bean\", \"Fenugreek\", \"Mustard\", \"Radish\", \"Weed\"), class = \"factor\"),      zone = c(\"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\",      \"Z3\", \"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\", \"Z3\",      \"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\", \"Z3\", \"Z1\",      \"Z2\", \"Z3\", \"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\",      \"Z3\", \"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\", \"Z3\",      \"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\", \"Z3\", \"Z1\",      \"Z2\", \"Z3\", \"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\",      \"Z3\", \"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\", \"Z3\",      \"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\", \"Z3\", \"Z1\",      \"Z2\", \"Z3\", \"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\",      \"Z3\", \"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\", \"Z3\", \"Z1\", \"Z2\", \"Z3\",      \"Z1\", \"Z2\", \"Z3\"), biomass = c(3.27, 6.7, 14, 1.2, 16.1,      2.3, 5.6, 41.2, 1.5, 9.9, 1.7, 12.4, 2.7, 42.6, 4.6, 0.8,      0.4, 0, 3.6, 12.2, 26.2, 0.5, 0.4, 0, 3.6, 13.6, 7.24, 0.01,      0, 0.6, 4.1, 2.7, 15.3, 2.4, 19.7, 1.7, 2, 8.4, 11.7, 10.2,      3.2, 19.5, 7.98, 26.3, 30.6, 4.5, 5.7, 2.2, 24.3, 78.2, 7.85,      4.3, 0.9, 9.5, 3, 4, 6.1, 7.9, 20.5, 6.1, 13.7, 33.1, 17.4,      3.2, 10.1, 3.1, 9.3, 0.1, 7.7, 1.7, 1.97, 1.8, 0.4, 13.3,      5.8, 15.6, 3.3, 11.6, 9.6, 22.6, 18.9, 10.5, 0.4, 7.7, 1.6,      37, 2.6, 4.3, 9.8, 9.7, 13, 1.5, 6.3, 0, 0, 0, 0.1, 0.5,      0, 1.7, 4.4, 0, 11.6, 11.2, 11.5, 11, 8.8, 15.2, 17.9, 9.8,      7.1), emergence_rate = c(12L, 22L, 33L, 11L, 24L, 29L, 9L,      12L, 12L, 20L, 0L, 25L, 7L, 9L, 6L, 2L, 11L, 12L, 35L, 5L,      45L, 10L, 20L, 7L, 3L, 4L, 3L, 0L, 0L, 8L, 31L, 24L, 31L,      27L, 28L, 12L, 1L, 6L, 5L, 41L, 4L, 33L, 54L, 29L, 44L, 22L,      8L, 6L, 7L, 13L, 14L, 25L, 3L, 38L, 26L, 11L, 25L, 25L, 9L,      19L, 7L, 7L, 17L, 14L, 21L, 27L, 48L, 7L, 74L, 10L, 7L, 8L,      11L, 18L, 19L, 23L, 3L, 16L, 4L, 16L, 9L, 26L, 2L, 18L, 9L,      7L, 6L, 2L, 7L, 5L, 37L, 3L, 26L, 0L, 0L, 0L, 1L, 1L, 1L,      5L, 8L, 8L, 30L, 52L, 31L, 30L, 45L, 32L, 49L, 43L, 21L)), row.names = c(NA,  -111L), class = c(\"tbl_df\", \"tbl\", \"data.frame\"))",
+        "caption": "biomass.emergence",
+        "totalObservations": "111",
+        "displayedObservations": "111",
+        "variables": "5",
+        "cacheKey": "E2153E3E",
+        "object": "",
+        "environment": "_rs_no_env",
+        "contentUrl": "grid_resource/gridviewer.html?env=_rs_no_env&obj=&cache_key=E2153E3E&max_cols=50",
+        "preview": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 94504970960904,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1668527497601,
+    "read_only": false,
+    "read_only_alternatives": []
+}

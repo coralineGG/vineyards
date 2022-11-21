@@ -1,0 +1,38 @@
+Line ;Specie ;Zone 1;Zone 2;Zone 3 
+1;Weed;12;22;33
+2;Barley;11;24;29
+2;Mustard;9;12;12
+2;Weed;20;0;25
+3;Radish;7;9;6
+3;Fenugreek;2;11;12
+3;Weed;35;5;45
+4;Barley;10;20;7
+4;Faba bean;3;4;3
+4;Mustard;0;0;8
+4;Weed;31;24;31
+5;Barley;27;28;12
+5;Faba bean;1;6;5
+5;Weed;41;4;33
+6;Barley;54;29;44
+6;Weed;22;8;6
+7;Radish;7;13;14
+7;Weed;25;3;38
+8;Fenugreek;26;11;25
+8;Weed;25;9;19
+9;Radish;7;7;17
+9;Barley;14;21;27
+9;Weed;48;7;74
+10;Fenugreek;10;7;8
+10;Barley;11;18;19
+10;Weed;23;3;16
+11;Faba bean;4;16;9
+11;Weed;26;2;18
+12;Mustard;9;7;6
+12;Faba bean;2;7;5
+12;Weed;37;3;26
+13;Radish;0;0;0
+13;Barley;1;1;1
+13;Fenugreek;5;8;8
+13;Weed;30;52;31
+14;Mustard;30;45;32
+14;Weed;49;43;21
