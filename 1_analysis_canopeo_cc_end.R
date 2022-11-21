@@ -6,17 +6,13 @@ setwd("D:/études/SUPAGRO/2A/D4/github/vineyards")
 library(tidyverse)
 
 # get the data
-canopeo_cc_ini = read.table("data_canopeo-cc.csv", header = TRUE, sep = ";", dec = ",")
+canopeo_cc_ini = read.table("Data_collection_canopeo_cc_only.csv", header = TRUE, sep = ";", dec = ",")
 view(canopeo_cc_ini)
 # we wanted to turn the column named "zone_X" into one 
 #in order for the data to be easier to analyse
 canopeo_cc <- canopeo_cc_ini%>%
-  select (date, Line, Zone.1, Zone.2, Zone.3, NEW.Z1, NEW.Z3)%>%
-  slice(1:84)%>%
-  filter(date == "07/11/2022")%>%
-  #filter(cover_rate =!is.na()) pour essayer d'enlever les NA
-  #na.omit()%>% # si on ajoute cette ligne, R ne garde que les Line 12... de fait, nous ne savons pas comment enlever les NA de notre tableau
-  pivot_longer(cols = Zone.1:NEW.Z3, names_to = "zone",values_to = "cover_rate" )
+  select (Line, Z1, Z2, Z3)%>%
+  pivot_longer(cols = Z1:Z3, names_to = "zone",values_to = "cover_rate" )
 view(canopeo_cc)
 #Graph 
 library(ggplot2)
@@ -30,7 +26,7 @@ canopeo_cc%>%
   summarise(mymean=mean(cover_rate, na.rm=T),
             mysd=sd(cover_rate, na.rm=T))%>%
   mutate(ymax=mymean+mysd, ymin=mymean-mysd)%>%
-  ggplot (aes(x = Line, y = mymean, ymin=ymin, ymax=ymax)) + 
+  ggplot (aes(x = reorder(Line, mymean), y = mymean, ymin=ymin, ymax=ymax)) + 
   geom_point()+
   geom_errorbar()+
   labs(x="Line", y="Cover rate", title = "Percentage of coverance of the soil for different cover crops")
