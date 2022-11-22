@@ -34,10 +34,10 @@ plot(anova.canopeo.l)
 
 # Kruskal
 kruskal <- kruskal(canopeo_weed$weed_cover_rate, canopeo_weed$line, console = T)
-tukey3 <- kruskal$groups %>%
+table.letters.covers <- kruskal$groups %>%
   rownames_to_column("line") %>%
   select(line, groups)
-view(tukey3)
+view(table.letters.covers)
 #pas sur de ce à quoi ça sert...
 #est-ce que c'est pour grouper les lignes associée par le kruskal entre elles ?
 
