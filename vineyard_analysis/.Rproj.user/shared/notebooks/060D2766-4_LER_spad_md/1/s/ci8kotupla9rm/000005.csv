@@ -1,0 +1,4 @@
+"0","LER= read.table(""4_LER.csv"", header = TRUE,sep = "";"", dec = "","")"
+"0",""
+"0","LER%>%"
+"0","  mutate(Line = as.integer(Line))"

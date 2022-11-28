@@ -1,0 +1,1037 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={4\_LER\_spad},
+  pdfauthor={Lucile regouby},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{4\_LER\_spad}
+\author{Lucile regouby}
+\date{21/11/2022}
+
+\begin{document}
+\maketitle
+
+\hypertarget{contexte-sur-lanalyse}{%
+\subsection{Contexte sur l'analyse}\label{contexte-sur-lanalyse}}
+
+We want to answer to this theme of our project weed regulation and
+competition in the cover, Assing this question : Which species work
+better in association as a cover crop?
+
+\hypertarget{importation-of-data-an-libraries}{%
+\subsection{Importation of data an
+libraries}\label{importation-of-data-an-libraries}}
+
+\hypertarget{libraires-importation}{%
+\subsubsection{Libraires importation}\label{libraires-importation}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --
+\end{verbatim}
+
+\begin{verbatim}
+## v ggplot2 3.3.5     v purrr   0.3.4
+## v tibble  3.1.6     v dplyr   1.0.8
+## v tidyr   1.2.0     v stringr 1.4.0
+## v readr   2.1.2     v forcats 0.5.1
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(agricolae)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{data-importation}{%
+\subsubsection{data importation}\label{data-importation}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LER}\OtherTok{=} \FunctionTok{read.table}\NormalTok{(}\StringTok{"4\_LER.csv"}\NormalTok{, }\AttributeTok{header =} \ConstantTok{TRUE}\NormalTok{,}\AttributeTok{sep =} \StringTok{";"}\NormalTok{, }\AttributeTok{dec =} \StringTok{","}\NormalTok{)}
+
+\NormalTok{LER}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Line =} \FunctionTok{as.integer}\NormalTok{(Line))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     Line    Specie mono_mix zone biomass emergence_rate pre_LERp        LERp
+## 1      1      Weed     mono   Z1    3.27             12     0.27  1.00000000
+## 2      1      Weed     mono   Z2    6.70             22     0.30  1.00000000
+## 3      1      Weed     mono   Z3   14.00             33     0.42  1.00000000
+## 4      2    Barley      mix   Z1    1.20             11     0.11  0.73820915
+## 5      2    Barley      mix   Z2   16.10             24     0.67  0.73970215
+## 6      2    Barley      mix   Z3    2.30             29     0.08  0.11404101
+## 7      2   Mustard      mix   Z1    5.60              9     0.62  1.69696968
+## 8      2   Mustard      mix   Z2   41.20             12     3.43 17.55681777
+## 9      2   Mustard      mix   Z3    1.50             12     0.13  0.26315789
+## 10     2      Weed      mix   Z1    9.90             20     0.50  1.81651376
+## 11     2      Weed      mix   Z2    1.70              0      Inf          NA
+## 12     2      Weed      mix   Z3   12.40             25     0.50  1.16914287
+## 13     3    Radish      mix   Z1    2.70              7     0.39  0.11111111
+## 14     3    Radish      mix   Z2   42.60              9     4.73  0.78687127
+## 15     3    Radish      mix   Z3    4.60              6     0.77  1.36730360
+## 16     3 Fenugreek      mix   Z1    0.80              2     0.40  3.46666653
+## 17     3 Fenugreek      mix   Z2    0.40             11     0.04  0.10000001
+## 18     3 Fenugreek      mix   Z3    0.00             12     0.00  0.00000000
+## 19     3      Weed      mix   Z1    3.60             35     0.10  0.37745739
+## 20     3      Weed      mix   Z2   12.20              5     2.44  8.01194042
+## 21     3      Weed      mix   Z3   26.20             45     0.58  1.37238096
+## 22     4    Barley      mix   Z1    0.50             10     0.05  0.33834586
+## 23     4    Barley      mix   Z2    0.40             20     0.02  0.02205323
+## 24     4    Barley      mix   Z3    0.00              7     0.00  0.00000000
+## 25     4 Faba bean      mix   Z1    3.60              3     1.20  0.50000000
+## 26     4 Faba bean      mix   Z2   13.60              4     3.40  2.40707965
+## 27     4 Faba bean      mix   Z3    7.24              3     2.41  1.14920635
+## 28     4   Mustard      mix   Z1    0.01              0      Inf          NA
+## 29     4   Mustard      mix   Z2    0.00              0      NaN          NA
+## 30     4   Mustard      mix   Z3    0.60              8     0.08  0.15789474
+## 31     4      Weed      mix   Z1    4.10             31     0.13  0.48535068
+## 32     4      Weed      mix   Z2    2.70             24     0.11  0.36940299
+## 33     4      Weed      mix   Z3   15.30             31     0.49  1.16336407
+## 34     5    Barley      mix   Z1    2.40             27     0.09  0.60150376
+## 35     5    Barley      mix   Z2   19.70             28     0.70  0.77580120
+## 36     5    Barley      mix   Z3    1.70             12     0.14  0.20370371
+## 37     5 Faba bean      mix   Z1    2.00              1     2.00  0.83333333
+## 38     5 Faba bean      mix   Z2    8.40              6     1.40  0.99115044
+## 39     5 Faba bean      mix   Z3   11.70              5     2.34  1.11428571
+## 40     5      Weed      mix   Z1   10.20             41     0.25  0.91295593
+## 41     5      Weed      mix   Z2    3.20              4     0.80  2.62686571
+## 42     5      Weed      mix   Z3   19.50             33     0.59  1.39285715
+## 43     6    Barley     mono   Z1    7.98             54     0.15  1.00000000
+## 44     6    Barley     mono   Z2   26.30             29     0.91  1.00000000
+## 45     6    Barley     mono   Z3   30.60             44     0.70  1.00000000
+## 46     6      Weed      mix   Z1    4.50             22     0.20  0.75062550
+## 47     6      Weed      mix   Z2    5.70              8     0.71  2.33955227
+## 48     6      Weed      mix   Z3    2.20              6     0.37  0.86428573
+## 49     7    Radish     mono   Z1   24.30              7     3.47  1.00000000
+## 50     7    Radish     mono   Z2   78.20             13     6.02  1.00000000
+## 51     7    Radish     mono   Z3    7.85             14     0.56  1.00000000
+## 52     7      Weed      mix   Z1    4.30             25     0.17  0.63119266
+## 53     7      Weed      mix   Z2    0.90              3     0.30  0.98507464
+## 54     7      Weed      mix   Z3    9.50             38     0.25  0.58928572
+## 55     8 Fenugreek     mono   Z1    3.00             26     0.12  1.00000000
+## 56     8 Fenugreek     mono   Z2    4.00             11     0.36  1.00000000
+## 57     8 Fenugreek     mono   Z3    6.10             25     0.24  1.00000000
+## 58     8      Weed      mix   Z1    7.90             25     0.32  1.15963303
+## 59     8      Weed      mix   Z2   20.50              9     2.28  7.47927043
+## 60     8      Weed      mix   Z3    6.10             19     0.32  0.75676692
+## 61     9    Radish      mix   Z1   13.70              7     1.96  0.56378601
+## 62     9    Radish      mix   Z2   33.10              7     4.73  0.78607965
+## 63     9    Radish      mix   Z3   17.40             17     1.02  1.82540276
+## 64     9    Barley      mix   Z1    3.20             14     0.23  1.54672394
+## 65     9    Barley      mix   Z2   10.10             21     0.48  0.53032772
+## 66     9    Barley      mix   Z3    3.10             27     0.11  0.16509319
+## 67     9      Weed      mix   Z1    9.30             48     0.19  0.71100917
+## 68     9      Weed      mix   Z2    0.10              7     0.01  0.04690830
+## 69     9      Weed      mix   Z3    7.70             74     0.10  0.24527026
+## 70    10 Fenugreek      mix   Z1    1.70             10     0.17  1.47333327
+## 71    10 Fenugreek      mix   Z2    1.97              7     0.28  0.77392858
+## 72    10 Fenugreek      mix   Z3    1.80              8     0.23  0.92213115
+## 73    10    Barley      mix   Z1    0.40             11     0.04  0.24606974
+## 74    10    Barley      mix   Z2   13.30             18     0.74  0.81474440
+## 75    10    Barley      mix   Z3    5.80             19     0.31  0.43894049
+## 76    10      Weed      mix   Z1   15.60             23     0.68  2.48903072
+## 77    10      Weed      mix   Z2    3.30              3     1.10  3.61194035
+## 78    10      Weed      mix   Z3   11.60             16     0.73  1.70892859
+## 79    11 Faba bean     mono   Z1    9.60              4     2.40  1.00000000
+## 80    11 Faba bean     mono   Z2   22.60             16     1.41  1.00000000
+## 81    11 Faba bean     mono   Z3   18.90              9     2.10  1.00000000
+## 82    11      Weed      mix   Z1   10.50             26     0.40  1.48200422
+## 83    11      Weed      mix   Z2    0.40              2     0.20  0.65671643
+## 84    11      Weed      mix   Z3    7.70             18     0.43  1.00833335
+## 85    12   Mustard      mix   Z1    1.60              9     0.18  0.48484849
+## 86    12   Mustard      mix   Z2   37.00              7     5.29 27.02922019
+## 87    12   Mustard      mix   Z3    2.60              6     0.43  0.91228069
+## 88    12 Faba bean      mix   Z1    4.30              2     2.15  0.89583333
+## 89    12 Faba bean      mix   Z2    9.80              7     1.40  0.99115044
+## 90    12 Faba bean      mix   Z3    9.70              5     1.94  0.92380952
+## 91    12      Weed      mix   Z1   13.00             37     0.35  1.28936275
+## 92    12      Weed      mix   Z2    1.50              3     0.50  1.64179107
+## 93    12      Weed      mix   Z3    6.30             26     0.24  0.57115385
+## 94    13    Radish      mix   Z1    0.00              0      NaN          NA
+## 95    13    Radish      mix   Z2    0.00              0      NaN          NA
+## 96    13    Radish      mix   Z3    0.00              0      NaN          NA
+## 97    13    Barley      mix   Z1    0.10              1     0.10  0.67669172
+## 98    13    Barley      mix   Z2    0.50              1     0.50  0.55133080
+## 99    13    Barley      mix   Z3    0.00              1     0.00  0.00000000
+## 100   13 Fenugreek      mix   Z1    1.70              5     0.34  2.94666655
+## 101   13 Fenugreek      mix   Z2    4.40              8     0.55  1.51250002
+## 102   13 Fenugreek      mix   Z3    0.00              8     0.00  0.00000000
+## 103   13      Weed      mix   Z1   11.60             30     0.39  1.41896026
+## 104   13      Weed      mix   Z2   11.20             52     0.22  0.70723309
+## 105   13      Weed      mix   Z3   11.50             31     0.37  0.87442397
+## 106   14   Mustard     mono   Z1   11.00             30     0.37  1.00000000
+## 107   14   Mustard     mono   Z2    8.80             45     0.20  1.00000000
+## 108   14   Mustard     mono   Z3   15.20             32     0.48  1.00000000
+## 109   14      Weed      mix   Z1   17.90             49     0.37  1.34057292
+## 110   14      Weed      mix   Z2    9.80             43     0.23  0.74835129
+## 111   14      Weed      mix   Z3    7.10             21     0.34  0.79693879
+##         LER_cc
+## 1           NA
+## 2           NA
+## 3           NA
+## 4    2.4351788
+## 5   18.2965199
+## 6    0.3771989
+## 7           NA
+## 8           NA
+## 9           NA
+## 10          NA
+## 11          NA
+## 12          NA
+## 13   3.5777776
+## 14   0.8868713
+## 15   1.3673036
+## 16          NA
+## 17          NA
+## 18          NA
+## 19          NA
+## 20          NA
+## 21          NA
+## 22   0.8383459
+## 23   2.4291329
+## 24   1.3071011
+## 25          NA
+## 26          NA
+## 27          NA
+## 28          NA
+## 29          NA
+## 30          NA
+## 31          NA
+## 32          NA
+## 33          NA
+## 34   1.4348371
+## 35   1.7669516
+## 36   1.3179894
+## 37          NA
+## 38          NA
+## 39          NA
+## 40          NA
+## 41          NA
+## 42          NA
+## 43          NA
+## 44          NA
+## 45          NA
+## 46          NA
+## 47          NA
+## 48          NA
+## 49          NA
+## 50          NA
+## 51          NA
+## 52          NA
+## 53          NA
+## 54          NA
+## 55          NA
+## 56          NA
+## 57          NA
+## 58          NA
+## 59          NA
+## 60          NA
+## 61   2.1105099
+## 62   1.3164074
+## 63   1.9904959
+## 64          NA
+## 65          NA
+## 66          NA
+## 67          NA
+## 68          NA
+## 69          NA
+## 70   1.7194030
+## 71   1.5886730
+## 72   1.3610716
+## 73          NA
+## 74          NA
+## 75          NA
+## 76          NA
+## 77          NA
+## 78          NA
+## 79          NA
+## 80          NA
+## 81          NA
+## 82          NA
+## 83          NA
+## 84          NA
+## 85   1.3806818
+## 86  28.0203706
+## 87   1.8360902
+## 88          NA
+## 89          NA
+## 90          NA
+## 91          NA
+## 92          NA
+## 93          NA
+## 94   3.6233583
+## 95   2.0638308
+## 96   0.0000000
+## 97          NA
+## 98          NA
+## 99          NA
+## 100         NA
+## 101         NA
+## 102         NA
+## 103         NA
+## 104         NA
+## 105         NA
+## 106         NA
+## 107         NA
+## 108         NA
+## 109         NA
+## 110         NA
+## 111         NA
+\end{verbatim}
+
+\hypertarget{ler-analysis-the-mixed-cover-will-be-more-productive-in-biomass-than-the-monoculture-cover.}{%
+\subsection{1. -- LER Analysis -- The mixed cover will be more
+productive in biomass than the monoculture
+cover.}\label{ler-analysis-the-mixed-cover-will-be-more-productive-in-biomass-than-the-monoculture-cover.}}
+
+\hypertarget{complete-ler-analysis-between-all-the-treatments}{%
+\subsubsection{Complete LER analysis between all the
+treatments}\label{complete-ler-analysis-between-all-the-treatments}}
+
+graph of the values of LER in function of the treatment
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LER}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{( mono\_mix }\SpecialCharTok{==} \StringTok{"mix"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{ (Specie }\SpecialCharTok{!=} \StringTok{"Weed"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Line)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mymean=}\FunctionTok{mean}\NormalTok{(LER\_cc, }\AttributeTok{na.rm=}\NormalTok{T),}
+            \AttributeTok{mysd=}\FunctionTok{sd}\NormalTok{(LER\_cc, }\AttributeTok{na.rm=}\NormalTok{T))}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ymax=}\NormalTok{mymean}\SpecialCharTok{+}\NormalTok{mysd, }\AttributeTok{ymin=}\NormalTok{mymean}\SpecialCharTok{{-}}\NormalTok{mysd) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{ (}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(Line, mymean), }\AttributeTok{y =}\NormalTok{ mymean,}
+              \AttributeTok{ymin=}\NormalTok{ymin, }\AttributeTok{ymax=}\NormalTok{ymax, }\AttributeTok{na.rm=}\NormalTok{T)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{geom\_errorbar}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Line"}\NormalTok{, }\AttributeTok{y=}\StringTok{"LER value"}\NormalTok{, }\AttributeTok{title =} \StringTok{"LER value in function of the treatment"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{4_LER_spad_md_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+Test anova sur les LER :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{anova.LER }\OtherTok{\textless{}{-}}\FunctionTok{lm}\NormalTok{(LER\_cc}\SpecialCharTok{\textasciitilde{}}\NormalTok{Line, LER)}
+\FunctionTok{anova}\NormalTok{(anova.LER)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: LER_cc
+##           Df Sum Sq Mean Sq F value Pr(>F)
+## Line       1   4.78   4.779  0.1162 0.7364
+## Residuals 22 904.67  41.121
+\end{verbatim}
+
+not significative difference between the treatments
+
+vérification des hypothèses de l'anova :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(anova.LER)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{4_LER_spad_md_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+==\textgreater{} les points 5 et 86 sont trop différents des autres
+valeurs, on va les enlever
+
+nouveau tableau sans les lignes 5 et 86 :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LER\_best }\OtherTok{\textless{}{-}}\NormalTok{ LER }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rownames\_to\_column}\NormalTok{(}\StringTok{"observation"}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{ (observation }\SpecialCharTok{!=} \DecValTok{86}\NormalTok{)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{( observation }\SpecialCharTok{!=} \DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+nouveau graphique :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LER\_best}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{( mono\_mix }\SpecialCharTok{==} \StringTok{"mix"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{ (Specie }\SpecialCharTok{!=} \StringTok{"Weed"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Line)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mymean=}\FunctionTok{mean}\NormalTok{(LER\_cc, }\AttributeTok{na.rm=}\NormalTok{T),}
+            \AttributeTok{mysd=}\FunctionTok{sd}\NormalTok{(LER\_cc, }\AttributeTok{na.rm=}\NormalTok{T))}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ymax=}\NormalTok{mymean}\SpecialCharTok{+}\NormalTok{mysd, }\AttributeTok{ymin=}\NormalTok{mymean}\SpecialCharTok{{-}}\NormalTok{mysd) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{ (}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(Line, mymean), }\AttributeTok{y =}\NormalTok{ mymean,}
+              \AttributeTok{ymin=}\NormalTok{ymin, }\AttributeTok{ymax=}\NormalTok{ymax, }\AttributeTok{na.rm=}\NormalTok{T)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{geom\_errorbar}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Line"}\NormalTok{, }\AttributeTok{y=}\StringTok{"LER value"}\NormalTok{, }\AttributeTok{title =} \StringTok{"LER value in function of the treatment"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{4_LER_spad_md_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+test avec une anova et vérification des hypothèses
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{anova.LER.best }\OtherTok{\textless{}{-}}\FunctionTok{lm}\NormalTok{(LER\_cc}\SpecialCharTok{\textasciitilde{}}\NormalTok{Line, LER\_best)}
+\FunctionTok{anova}\NormalTok{(anova.LER.best)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: LER_cc
+##           Df  Sum Sq Mean Sq F value Pr(>F)
+## Line       1  0.0716 0.07163  0.0923 0.7644
+## Residuals 20 15.5152 0.77576
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(anova.LER.best)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{4_LER_spad_md_files/figure-latex/unnamed-chunk-8-1.pdf}
+\#\#\# Analysis of the LERp for each specie between mix and monoculture
+
+\hypertarget{radish}{%
+\paragraph{Radish}\label{radish}}
+
+graphique du LERp entre tous les différents treatments où il y a du
+radis (mono ou mix)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LER}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{( Specie }\SpecialCharTok{==} \StringTok{"Radish"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Line)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mymean=}\FunctionTok{mean}\NormalTok{(LERp, }\AttributeTok{na.rm=}\NormalTok{T),}
+            \AttributeTok{mysd=}\FunctionTok{sd}\NormalTok{(LERp, }\AttributeTok{na.rm=}\NormalTok{T))}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ymax=}\NormalTok{mymean}\SpecialCharTok{+}\NormalTok{mysd, }\AttributeTok{ymin=}\NormalTok{mymean}\SpecialCharTok{{-}}\NormalTok{mysd) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{ (}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(Line, mymean), }\AttributeTok{y =}\NormalTok{ mymean,}
+              \AttributeTok{ymin=}\NormalTok{ymin, }\AttributeTok{ymax=}\NormalTok{ymax, }\AttributeTok{na.rm=}\NormalTok{T)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{geom\_errorbar}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Line"}\NormalTok{, }\AttributeTok{y=}\StringTok{"LERp value"}\NormalTok{, }\AttributeTok{title =} \StringTok{"LERp value in function of the radish treatment (monoculture or mix)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 1 rows containing missing values (geom_point).
+\end{verbatim}
+
+\includegraphics{4_LER_spad_md_files/figure-latex/unnamed-chunk-9-1.pdf}
+commentaire : la ligne 13 c'est un mélange avec le radis qui n'a pas
+marché du tout la ligne 7 c'est le radis en monoculture ==\textgreater{}
+normal qu'il n'y ai pas de variation ==\textgreater{} LERp=1
+
+test avec une anova :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LER.radish }\OtherTok{\textless{}{-}}\NormalTok{ LER}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{( Specie }\SpecialCharTok{==} \StringTok{"Radish"}\NormalTok{)}
+\NormalTok{anova.LER.radish }\OtherTok{\textless{}{-}}\FunctionTok{lm}\NormalTok{(LERp}\SpecialCharTok{\textasciitilde{}}\NormalTok{Line,LER.radish)}
+\FunctionTok{anova}\NormalTok{(anova.LER.radish)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: LERp
+##           Df  Sum Sq Mean Sq F value Pr(>F)
+## Line       1 0.15188 0.15188   0.625 0.4551
+## Residuals  7 1.70113 0.24302
+\end{verbatim}
+
+pas de différence significative entre les treatments
+
+vérifier les hypothèses de l'anova :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(anova.LER.radish)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{4_LER_spad_md_files/figure-latex/unnamed-chunk-11-1.pdf}
+Pas ouff; la normalité est pas du tout respecté, on a vraiment très peu
+de valeurs pour le coup
+
+test d'un kruskal
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{kruskal.radish }\OtherTok{\textless{}{-}} \FunctionTok{kruskal}\NormalTok{(LER.radish}\SpecialCharTok{$}\NormalTok{LERp, LER.radish}\SpecialCharTok{$}\NormalTok{Line, }\AttributeTok{console =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Study: LER.radish$LERp ~ LER.radish$Line
+## Kruskal-Wallis test's
+## Ties or no Ties
+## 
+## Critical Value: 0.6436782
+## Degrees of freedom: 2
+## Pvalue Chisq  : 0.7248148 
+## 
+## LER.radish$Line,  means of the ranks
+## 
+##   LER.radish.LERp r
+## 3        4.333333 3
+## 7        6.000000 3
+## 9        4.666667 3
+## 
+## Post Hoc Analysis
+## 
+## t-Student: 2.446912
+## Alpha    : 0.05
+## Minimum Significant Difference: 5.956573 
+## 
+## Treatments with the same letter are not significantly different.
+## 
+##   LER.radish$LERp groups
+## 7        6.000000      a
+## 9        4.666667      a
+## 3        4.333333      a
+\end{verbatim}
+
+ils ne sont pas significativement différents
+
+\hypertarget{barley}{%
+\paragraph{Barley}\label{barley}}
+
+graphique du LERp de tous les treatment où il y a du barley (mono ou
+mix)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LER}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{( Specie }\SpecialCharTok{==} \StringTok{"Barley"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Line)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mymean=}\FunctionTok{mean}\NormalTok{(LERp, }\AttributeTok{na.rm=}\NormalTok{T),}
+            \AttributeTok{mysd=}\FunctionTok{sd}\NormalTok{(LERp, }\AttributeTok{na.rm=}\NormalTok{T))}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ymax=}\NormalTok{mymean}\SpecialCharTok{+}\NormalTok{mysd, }\AttributeTok{ymin=}\NormalTok{mymean}\SpecialCharTok{{-}}\NormalTok{mysd) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{ (}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(Line, mymean), }\AttributeTok{y =}\NormalTok{ mymean,}
+              \AttributeTok{ymin=}\NormalTok{ymin, }\AttributeTok{ymax=}\NormalTok{ymax, }\AttributeTok{na.rm=}\NormalTok{T)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{geom\_errorbar}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Line"}\NormalTok{, }\AttributeTok{y=}\StringTok{"LERp value"}\NormalTok{, }\AttributeTok{title =} \StringTok{"LERp value in function of the barley treatment (monoculture or mix)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{4_LER_spad_md_files/figure-latex/unnamed-chunk-13-1.pdf}
+On peut quand même voir que la plus part des treatments ils sont en
+dessous de 1 / du controle en ligne 6
+
+anova :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LER.B }\OtherTok{\textless{}{-}}\NormalTok{ LER}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{( Specie }\SpecialCharTok{==} \StringTok{"Barley"}\NormalTok{)}
+
+\NormalTok{anova.LER.B }\OtherTok{\textless{}{-}}\FunctionTok{lm}\NormalTok{(LERp}\SpecialCharTok{\textasciitilde{}}\NormalTok{Line,LER.B)}
+\FunctionTok{anova}\NormalTok{(anova.LER.B)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: LERp
+##           Df Sum Sq  Mean Sq F value Pr(>F)
+## Line       1 0.0050 0.004998  0.0288 0.8671
+## Residuals 19 3.2988 0.173621
+\end{verbatim}
+
+pas de différence significative entre les treatments
+
+vérification des hypothèses de l'anova :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(anova.LER.B)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{4_LER_spad_md_files/figure-latex/unnamed-chunk-15-1.pdf}
+La normalité est pas ouf, le reste ça passe
+
+test d'un kruskal, j'ai pas le droit mais j'en fait un quand même:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{kruskal.B }\OtherTok{\textless{}{-}} \FunctionTok{kruskal}\NormalTok{(LER.B}\SpecialCharTok{$}\NormalTok{LERp, LER.B}\SpecialCharTok{$}\NormalTok{Line, }\AttributeTok{console =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Study: LER.B$LERp ~ LER.B$Line
+## Kruskal-Wallis test's
+## Ties or no Ties
+## 
+## Critical Value: 9.229099
+## Degrees of freedom: 6
+## Pvalue Chisq  : 0.1610977 
+## 
+## LER.B$Line,  means of the ranks
+## 
+##    LER.B.LERp r
+## 2   11.000000 3
+## 4    4.166667 3
+## 5   11.333333 3
+## 6   19.000000 3
+## 9   12.000000 3
+## 10  11.000000 3
+## 13   8.500000 3
+## 
+## Post Hoc Analysis
+## 
+## t-Student: 2.144787
+## Alpha    : 0.05
+## Minimum Significant Difference: 9.515348 
+## 
+## Treatments with the same letter are not significantly different.
+## 
+##    LER.B$LERp groups
+## 6   19.000000      a
+## 9   12.000000     ab
+## 5   11.333333     ab
+## 2   11.000000     ab
+## 10  11.000000     ab
+## 13   8.500000      b
+## 4    4.166667      b
+\end{verbatim}
+
+Les lignes 4 et 13 c'est des mix de 3 espèces ==\textgreater{} pour celà
+qu'ils sont différents. La ligne 6 c'est le barley en monoculture
+
+meilleur graphique :
+
+\hypertarget{mustard}{%
+\paragraph{Mustard}\label{mustard}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LER}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{( Specie }\SpecialCharTok{==} \StringTok{"Mustard"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Line)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mymean=}\FunctionTok{mean}\NormalTok{(LERp, }\AttributeTok{na.rm=}\NormalTok{T),}
+            \AttributeTok{mysd=}\FunctionTok{sd}\NormalTok{(LERp, }\AttributeTok{na.rm=}\NormalTok{T))}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ymax=}\NormalTok{mymean}\SpecialCharTok{+}\NormalTok{mysd, }\AttributeTok{ymin=}\NormalTok{mymean}\SpecialCharTok{{-}}\NormalTok{mysd, ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{ (}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(Line, mymean), }\AttributeTok{y =}\NormalTok{ mymean,}
+              \AttributeTok{ymin=}\NormalTok{ymin, }\AttributeTok{ymax=}\NormalTok{ymax, }\AttributeTok{na.rm=}\NormalTok{T)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{geom\_errorbar}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Line"}\NormalTok{, }\AttributeTok{y=}\StringTok{"LERp value for mustard"}\NormalTok{, }\AttributeTok{title =} \StringTok{"LERp value in function of the mustard treatment (monoculture or mix)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{4_LER_spad_md_files/figure-latex/unnamed-chunk-18-1.pdf}
+La ligne 14 c'est la moutarde en monoculture La ligne 4 : qu'une seule
+valeur pour une zone est valables
+
+anova:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LER.m }\OtherTok{\textless{}{-}}\NormalTok{ LER}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{( Specie }\SpecialCharTok{==} \StringTok{"Mustard"}\NormalTok{)}
+
+\NormalTok{anova.LER.m }\OtherTok{\textless{}{-}}\FunctionTok{lm}\NormalTok{(LERp}\SpecialCharTok{\textasciitilde{}}\NormalTok{Line,LER.m)}
+\FunctionTok{anova}\NormalTok{(anova.LER.m)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: LERp
+##           Df Sum Sq Mean Sq F value Pr(>F)
+## Line       1   2.65   2.647  0.0271 0.8734
+## Residuals  8 782.08  97.760
+\end{verbatim}
+
+pas de différence significative vérification des hypothèses
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(anova.LER.m)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{4_LER_spad_md_files/figure-latex/unnamed-chunk-20-1.pdf}
+encore une fois on a vraiment très peu de valeurs dont 2 valeurs qui
+sont pas ouf (la 2 et la 8)
+
+test sans ces 2 valeurs : ==\textgreater{} en vrai flemme de ouf
+
+\hypertarget{faba-bean}{%
+\paragraph{Faba bean}\label{faba-bean}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LER}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{( Specie }\SpecialCharTok{==} \StringTok{"Faba bean"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Line)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mymean=}\FunctionTok{mean}\NormalTok{(LERp, }\AttributeTok{na.rm=}\NormalTok{T),}
+            \AttributeTok{mysd=}\FunctionTok{sd}\NormalTok{(LERp, }\AttributeTok{na.rm=}\NormalTok{T))}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ymax=}\NormalTok{mymean}\SpecialCharTok{+}\NormalTok{mysd, }\AttributeTok{ymin=}\NormalTok{mymean}\SpecialCharTok{{-}}\NormalTok{mysd, ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{ (}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(Line, mymean), }\AttributeTok{y =}\NormalTok{ mymean,}
+              \AttributeTok{ymin=}\NormalTok{ymin, }\AttributeTok{ymax=}\NormalTok{ymax, }\AttributeTok{na.rm=}\NormalTok{T)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{geom\_errorbar}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Line"}\NormalTok{, }\AttributeTok{y=}\StringTok{"LERp value for faba bean"}\NormalTok{, }\AttributeTok{title =} \StringTok{"LERp value in function of the faba bean treatment (monoculture or mix)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{4_LER_spad_md_files/figure-latex/unnamed-chunk-21-1.pdf}
+Line 4 : mix of 3 Line 11: Faba bean in monoculture
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LER.fb }\OtherTok{\textless{}{-}}\NormalTok{ LER}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{( Specie }\SpecialCharTok{==} \StringTok{"Faba bean"}\NormalTok{)}
+
+\NormalTok{anova.LER.fb }\OtherTok{\textless{}{-}}\FunctionTok{lm}\NormalTok{(LERp}\SpecialCharTok{\textasciitilde{}}\NormalTok{Line,LER.fb)}
+\FunctionTok{anova}\NormalTok{(anova.LER.fb)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: LERp
+##           Df  Sum Sq Mean Sq F value Pr(>F)
+## Line       1 0.15349 0.15349  0.7301 0.4128
+## Residuals 10 2.10218 0.21022
+\end{verbatim}
+
+pas de différence significatif
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(anova.LER.fb)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{4_LER_spad_md_files/figure-latex/unnamed-chunk-23-1.pdf}
+
+Pas ouf mais de toute façon pas énormément de valeurs
+
+\hypertarget{fenugreek}{%
+\paragraph{Fenugreek}\label{fenugreek}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LER}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{( Specie }\SpecialCharTok{==} \StringTok{"Fenugreek"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Line)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mymean=}\FunctionTok{mean}\NormalTok{(LERp, }\AttributeTok{na.rm=}\NormalTok{T),}
+            \AttributeTok{mysd=}\FunctionTok{sd}\NormalTok{(LERp, }\AttributeTok{na.rm=}\NormalTok{T))}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ymax=}\NormalTok{mymean}\SpecialCharTok{+}\NormalTok{mysd, }\AttributeTok{ymin=}\NormalTok{mymean}\SpecialCharTok{{-}}\NormalTok{mysd, ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{ (}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(Line, mymean), }\AttributeTok{y =}\NormalTok{ mymean,}
+              \AttributeTok{ymin=}\NormalTok{ymin, }\AttributeTok{ymax=}\NormalTok{ymax, }\AttributeTok{na.rm=}\NormalTok{T)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{geom\_errorbar}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Line"}\NormalTok{, }\AttributeTok{y=}\StringTok{"LERp value for fenugreek"}\NormalTok{, }\AttributeTok{title =} \StringTok{"LERp value in function of the fenugreek treatment (monoculture or mix)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{4_LER_spad_md_files/figure-latex/unnamed-chunk-24-1.pdf}
+Line 8: monoculture Line 3: mix of 2 Line 13: mix of 3
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LER.fn }\OtherTok{\textless{}{-}}\NormalTok{ LER}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{( Specie }\SpecialCharTok{==} \StringTok{"Fenugreek"}\NormalTok{)}
+
+\NormalTok{anova.LER.fn }\OtherTok{\textless{}{-}}\FunctionTok{lm}\NormalTok{(LERp}\SpecialCharTok{\textasciitilde{}}\NormalTok{Line,LER.fn)}
+\FunctionTok{anova}\NormalTok{(anova.LER.fn)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: LERp
+##           Df  Sum Sq Mean Sq F value Pr(>F)
+## Line       1  0.0863 0.08627  0.0677    0.8
+## Residuals 10 12.7400 1.27400
+\end{verbatim}
+
+pas de différence significative
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(anova.LER.fn)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{4_LER_spad_md_files/figure-latex/unnamed-chunk-26-1.pdf}
+pas ouf
+
+\hypertarget{spad-analysis}{%
+\subsection{Spad analysis}\label{spad-analysis}}
+
+\hypertarget{importation-of-the-data-and-pivot}{%
+\subsubsection{importation of the data and pivot
+:}\label{importation-of-the-data-and-pivot}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{spad\_ini}\OtherTok{=} \FunctionTok{read.table}\NormalTok{(}\StringTok{"4\_spad.csv"}\NormalTok{, }\AttributeTok{header =} \ConstantTok{TRUE}\NormalTok{,}\AttributeTok{sep =} \StringTok{";"}\NormalTok{, }\AttributeTok{dec =} \StringTok{","}\NormalTok{)}
+
+\FunctionTok{view}\NormalTok{(spad\_ini)}
+\NormalTok{spad\_ini}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Line =} \FunctionTok{as.integer}\NormalTok{(Line), }\AttributeTok{nature=}\FunctionTok{as.factor}\NormalTok{(nature),}
+         \AttributeTok{legumes=}\FunctionTok{as.factor}\NormalTok{(legumes), }\AttributeTok{Date=}\FunctionTok{as.factor}\NormalTok{(Date))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     Date Line    Specie nature legumes    Z1 Z1.1 Z1.2 Z1.3 Z1.4   Z2  Z2.1
+## 1  17/10    2    Barley    mix      no 101.4 63.9 97.9 53.4 42.9 63.7 101.0
+## 2  17/10    2   Mustard    mix      no  35.7 58.3 36.5 36.8 35.6 31.2  29.3
+## 3  17/10    3    Radish    mix     yes  36.9 36.2 34.7 34.3 33.8 35.1  31.1
+## 4  17/10    3 Fenugreek    mix     yes  47.4 49.1 54.0 47.4 47.6 46.7  44.4
+## 5  17/10    4    Barley    mix     yes  34.9 36.6 39.3   NA 39.3 87.3  38.4
+## 6  17/10    4 Faba bean    mix     yes  42.5 44.9 44.1 44.1 44.8 38.1  52.4
+## 7  17/10    4   Mustard    mix     yes  41.5 39.3 34.6 34.4 35.4 32.2  36.9
+## 8  17/10    5    Barley    mix     yes  34.3 44.6 42.3 41.2 36.9 37.9  39.6
+## 9  17/10    5 Faba bean    mix     yes  41.1 41.6 43.0 41.8 42.0 35.6  47.2
+## 10 17/10    6    Barley   mono      no  43.0 40.8 41.9 39.4 41.4 52.7 114.3
+## 11 17/10    7    Radish   mono      no  44.8 39.3 30.0 33.0 28.4 30.9  32.3
+## 12 17/10    8 Fenugreek   mono     yes  39.8 39.1 41.2 40.6 41.6 46.1  45.4
+## 13 17/10    9    Radish    mix      no  30.9 29.5 29.0 29.1 29.2 34.5  37.4
+## 14 17/10    9    Barley    mix      no  39.5 37.6 36.4 38.2 35.8 38.1  39.3
+## 15 17/10   10 Fenugreek    mix     yes  48.5 53.5 52.5 47.7 54.0   NA    NA
+## 16 17/10   10    Barley    mix     yes  11.9 55.5 41.7 40.3 40.7 27.5  26.2
+## 17 17/10   11 Faba bean   mono     yes    NA 46.7 46.3 45.9 46.4 44.5  51.7
+## 18 17/10   12   Mustard    mix     yes  34.9 32.8 33.4 34.0 32.8 29.4    NA
+## 19 17/10   12 Faba bean    mix     yes  43.7 43.8 43.5 43.8 43.9 38.3  38.7
+## 20 17/10   13    Radish    mix     yes  24.4 24.3 24.0 24.2 24.3 30.1  29.8
+## 21 17/10   13    Barley    mix     yes  35.9 36.8 37.4 37.2 37.9 39.5  38.8
+## 22 17/10   13 Fenugreek    mix     yes  45.0 45.2 45.3 47.0 47.5 40.8  38.7
+## 23 17/10   14   Mustard   mono      no  30.7 31.1   NA 31.7 32.0 31.1  31.7
+## 24 07/11    2    Barley    mix      no  35.3 35.8 34.2 33.7 33.6 47.5  47.9
+## 25 07/11    2   Mustard    mix      no  29.8 28.8 29.1 28.9 30.1 30.0  28.7
+## 26 07/11    3    Radish    mix     yes  30.7 30.5 30.5 30.5 30.7 35.1  35.7
+## 27 07/11    3 Fenugreek    mix     yes  32.9 29.7 29.5 25.6 27.0 45.8  46.0
+## 28 07/11    4    Barley    mix     yes  30.8 28.6 27.6 25.9 26.1 46.0  47.5
+## 29 07/11    4 Faba bean    mix     yes  40.9 40.4 40.1 40.4 40.3 44.2  34.4
+## 30 07/11    4   Mustard    mix     yes  30.9 30.3 30.5 29.9 29.9 31.3  31.1
+## 31 07/11    5    Barley    mix     yes  30.8 31.1 31.0 31.0 31.2 48.3  47.6
+## 32 07/11    5 Faba bean    mix     yes  39.9 38.0 38.2 38.1 38.0 47.1  43.3
+## 33 07/11    6    Barley   mono      no  39.5 38.7 38.7 38.3 38.9 40.9  40.6
+## 34 07/11    7    Radish   mono      no  31.1 32.3 32.1 32.4 31.5 36.3  36.4
+## 35 07/11    8 Fenugreek   mono     yes  42.3 41.8 41.0 40.9 40.9 40.2  40.1
+## 36 07/11    9    Radish    mix      no  28.8 28.2 28.3 28.2 28.2 32.0  30.8
+## 37 07/11    9    Barley    mix      no  29.7 28.1 29.0 29.5 26.6 36.7  35.5
+## 38 07/11   10 Fenugreek    mix     yes  37.1 36.9 37.2 36.9 36.7 44.2  44.1
+## 39 07/11   10    Barley    mix     yes  33.4 33.4 33.4 33.3 25.6 40.4  41.8
+## 40 07/11   11 Faba bean   mono     yes  32.9 32.6 33.2 33.3 33.5 43.7  42.6
+## 41 07/11   12   Mustard    mix     yes  24.9 24.7 24.9 23.3 27.0 23.8  24.2
+## 42 07/11   12 Faba bean    mix     yes  38.2 38.5 36.3 34.9 34.9 39.0  38.7
+## 43 07/11   13    Radish    mix     yes  21.3 21.7 22.0 21.9 22.1 37.7  37.4
+## 44 07/11   13    Barley    mix     yes  34.4 34.6 34.2 35.4 35.8 41.8  46.2
+## 45 07/11   13 Fenugreek    mix     yes  38.2 37.7 37.2 37.0 36.9 40.7  41.6
+## 46 07/11   14   Mustard   mono      no  56.7 55.1 54.7 33.3 32.4 27.5  27.1
+##    Z2.2  Z2.3 Z2.4   Z3 Z3.1 Z3.2 Z3.3 Z3.4
+## 1  99.4 101.0 95.9 25.2 38.3 47.3 35.7 44.1
+## 2  29.2  28.0 31.6 29.3 28.9 30.3 29.2 28.8
+## 3  33.4  33.5 33.1 27.2 26.4 26.7 31.6 25.6
+## 4  45.3  45.1 45.8 43.1 42.9 37.8 43.5 44.2
+## 5  96.6  82.0 58.6 27.0 29.4 31.6 28.6 30.0
+## 6  40.2  51.5 50.1 66.2 43.3 43.2 45.6 43.4
+## 7  33.3  32.6 34.2 20.1 31.8 31.5 31.5 31.7
+## 8  37.3  37.4 37.4 40.8 41.1 41.0 41.1 41.2
+## 9  37.7  36.3 35.8 43.7 41.0 38.5 41.7 41.8
+## 10 94.4 101.8 92.8 31.5 37.3 35.6 36.5 36.3
+## 11 32.9  29.7 32.5 25.6 26.2 27.1 27.7 26.9
+## 12 45.7  45.2 45.5 40.5 42.9 42.3 61.7 61.1
+## 13 34.1  37.4 36.3 30.9 30.6 30.7 29.5 31.0
+## 14 39.4  38.0 38.5 41.9 40.3 42.3 43.2 44.1
+## 15   NA  40.0 39.8 38.3 42.8 39.9 39.7 79.9
+## 16 19.9  25.9 23.2 38.7 39.0 39.4 38.9 40.1
+## 17 50.4  51.5 52.0 37.5 33.7 36.9 35.4 34.4
+## 18 21.0  20.8 26.9 34.3 34.1 35.6 28.6 29.9
+## 19 37.3  38.8 38.2 41.2 41.0 41.0 40.6   NA
+## 20 30.1  29.9 29.6 28.5 27.7 27.9 28.9 29.0
+## 21 38.8  38.9 39.4 42.7 36.5 37.3 37.1 37.2
+## 22   NA  41.0 38.1 42.7 43.6 44.2 45.6 45.2
+## 23 32.4  31.9 31.3 31.1 30.8 30.7 30.8 39.8
+## 24 47.6  47.2 46.4 41.0 40.6 39.1 38.4 37.5
+## 25 28.4  28.9 28.8 28.7 28.8 28.5 28.6 28.5
+## 26 35.8  36.3 36.4 24.7 24.3 23.8 24.0 23.8
+## 27 44.7  41.3 41.0 32.5 34.1 30.8 30.1 29.9
+## 28 47.3  47.3 47.2 28.3 28.2 28.5 28.4 28.4
+## 29 34.9  34.8 34.7 39.2 39.3 37.9 37.6 37.7
+## 30 30.8  30.8 30.8 30.0 29.8 29.9 30.3 30.0
+## 31 41.6  39.1 38.0 39.4 37.5 40.7 40.0 39.9
+## 32 44.7  44.5 44.7 37.8 37.9 36.1 36.1 35.6
+## 33 40.6  40.5 40.5 24.9 24.8 24.9 24.0 24.0
+## 34 36.5  36.8 35.9 32.8 33.8 32.9 33.1 33.8
+## 35 49.8  64.9 40.4 48.9 49.1 49.1 50.2 50.1
+## 36 29.4  30.3 30.9 24.4 24.6 24.7 24.5 24.6
+## 37 36.1  36.3 36.7 40.8 38.5 39.1 39.7 42.0
+## 38 44.3  45.1 45.5 42.2 42.4 40.3 39.3 40.5
+## 39 41.4  42.4 39.4 40.6 37.3 35.0  2.2 37.2
+## 40 42.7  42.3 42.3 36.7 37.0 38.5 39.8 38.7
+## 41 26.7  23.0 23.0 30.7 30.6 30.7 30.5 30.7
+## 42 38.7  38.9 39.1 42.1 42.4 42.0 42.0 42.0
+## 43 37.5  37.2 35.7 34.8 31.7 29.3 29.2 28.1
+## 44 26.3  39.7 39.6 97.2 69.5 61.1 63.8 67.6
+## 45 41.4  40.0 41.0 43.8 40.9 72.2 81.2 84.1
+## 46 26.8  26.4 26.2 44.4 39.3 43.3 43.6 45.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{spad }\OtherTok{\textless{}{-}}\NormalTok{ spad\_ini }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =}\NormalTok{ Z1}\SpecialCharTok{:}\NormalTok{Z3}\FloatTok{.4}\NormalTok{, }
+               \AttributeTok{names\_to =} \StringTok{"zone"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"spad\_value"}\NormalTok{ )}
+\FunctionTok{view}\NormalTok{(spad)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{spad-analysis-for-the-first-date}{%
+\subsubsection{spad analysis for the first
+date}\label{spad-analysis-for-the-first-date}}
+
+Note that the \texttt{echo\ =\ FALSE} parameter was added to the code
+chunk to prevent printing of the R code that generated the plot.
+
+\end{document}

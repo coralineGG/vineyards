@@ -1,0 +1,445 @@
+---
+title: "4_LER_spad"
+author: "Lucile regouby"
+date: "21/11/2022"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Contexte sur l'analyse 
+
+We want to answer to this theme of our project weed regulation and competition in the cover, Assing this question : Which species work better in association as a cover crop? 
+
+## Importation of data an libraries
+
+### Libraires importation
+
+```{r cars}
+library(tidyverse)
+library(ggplot2)
+library(agricolae)
+```
+
+### data importation 
+
+```{r}
+LER= read.table("4_LER.csv", header = TRUE,sep = ";", dec = ",")
+
+LER%>%
+  mutate(Line = as.integer(Line))
+```
+
+
+## 1.  -- LER Analysis -- The mixed cover will be more productive in biomass than the monoculture cover.
+
+### Complete LER analysis between all the treatments 
+
+graph of the values of LER in function of the treatment
+```{r}
+LER%>%
+  filter( mono_mix == "mix") %>%
+  filter (Specie != "Weed") %>%
+  group_by(Line)%>%
+  summarise(mymean=mean(LER_cc, na.rm=T),
+            mysd=sd(LER_cc, na.rm=T))%>%
+  mutate(ymax=mymean+mysd, ymin=mymean-mysd) %>%
+  ggplot (aes(x = reorder(Line, mymean), y = mymean,
+              ymin=ymin, ymax=ymax, na.rm=T)) + 
+  geom_point()+
+  geom_errorbar()+
+  labs(x="Line", y="LER value", title = "LER value in function of the treatment")
+
+```
+
+Test anova sur les LER : 
+
+```{r}
+anova.LER <-lm(LER_cc~Line, LER)
+anova(anova.LER)
+```
+not significative difference between the treatments 
+
+vérification des hypothèses de l'anova :
+
+```{r}
+par(mfrow = c(2,2))
+plot(anova.LER)
+```
+
+==> les points 5 et 86 sont trop différents des autres valeurs, on va les enlever 
+
+nouveau tableau sans les lignes 5 et 86 : 
+
+```{r}
+LER_best <- LER %>%
+  rownames_to_column("observation")%>%
+  filter (observation != 86)%>%
+  filter( observation != 5)
+```
+
+nouveau graphique : 
+
+```{r}
+LER_best%>%
+  filter( mono_mix == "mix") %>%
+  filter (Specie != "Weed") %>%
+  group_by(Line)%>%
+  summarise(mymean=mean(LER_cc, na.rm=T),
+            mysd=sd(LER_cc, na.rm=T))%>%
+  mutate(ymax=mymean+mysd, ymin=mymean-mysd) %>%
+  ggplot (aes(x = reorder(Line, mymean), y = mymean,
+              ymin=ymin, ymax=ymax, na.rm=T)) + 
+  geom_point()+
+  geom_errorbar()+
+  labs(x="Line", y="LER value", title = "LER value in function of the treatment")
+```
+
+test avec une anova et vérification des hypothèses 
+
+```{r}
+anova.LER.best <-lm(LER_cc~Line, LER_best)
+anova(anova.LER.best)
+```
+```{r}
+par(mfrow = c(2,2))
+plot(anova.LER.best)
+```
+### Analysis of the LERp for each specie between mix and monoculture 
+
+#### Radish 
+
+graphique du LERp entre tous les différents treatments où il y a du radis (mono ou mix)
+```{r}
+LER%>%
+  filter( Specie == "Radish") %>%
+  group_by(Line)%>%
+  summarise(mymean=mean(LERp, na.rm=T),
+            mysd=sd(LERp, na.rm=T))%>%
+  mutate(ymax=mymean+mysd, ymin=mymean-mysd) %>%
+  ggplot (aes(x = reorder(Line, mymean), y = mymean,
+              ymin=ymin, ymax=ymax, na.rm=T)) + 
+  geom_point()+
+  geom_errorbar()+
+  labs(x="Line", y="LERp value", title = "LERp value in function of the radish treatment (monoculture or mix)")
+```
+commentaire : la ligne 13 c'est un mélange avec le radis qui n'a pas marché du tout
+la ligne 7 c'est le radis en monoculture ==> normal qu'il n'y ai pas de variation ==> LERp=1
+
+test avec une anova :
+```{r}
+LER.radish <- LER%>%
+  filter( Specie == "Radish")
+anova.LER.radish <-lm(LERp~Line,LER.radish)
+anova(anova.LER.radish)
+```
+pas de différence significative entre les treatments
+
+vérifier les hypothèses de l'anova :
+
+```{r}
+par(mfrow = c(2,2))
+plot(anova.LER.radish)
+```
+Pas ouff; la normalité est pas du tout respecté, on a vraiment très peu de valeurs pour le coup 
+
+test d'un kruskal
+```{r}
+kruskal.radish <- kruskal(LER.radish$LERp, LER.radish$Line, console = T)
+```
+
+ils ne sont pas significativement différents
+
+
+#### Barley 
+
+graphique du LERp de tous les treatment où il y a du barley (mono ou mix)
+
+```{r}
+LER%>%
+  filter( Specie == "Barley") %>%
+  group_by(Line)%>%
+  summarise(mymean=mean(LERp, na.rm=T),
+            mysd=sd(LERp, na.rm=T))%>%
+  mutate(ymax=mymean+mysd, ymin=mymean-mysd) %>%
+  ggplot (aes(x = reorder(Line, mymean), y = mymean,
+              ymin=ymin, ymax=ymax, na.rm=T)) + 
+  geom_point()+
+  geom_errorbar()+
+  labs(x="Line", y="LERp value", title = "LERp value in function of the barley treatment (monoculture or mix)")
+```
+On peut quand même voir que la plus part des treatments ils sont en dessous de 1 / du controle en ligne 6 
+
+anova :
+```{r}
+LER.B <- LER%>%
+  filter( Specie == "Barley")
+
+anova.LER.B <-lm(LERp~Line,LER.B)
+anova(anova.LER.B)
+```
+pas de différence significative entre les treatments
+
+vérification des hypothèses de l'anova :
+
+```{r}
+par(mfrow = c(2,2))
+plot(anova.LER.B)
+```
+La normalité est pas ouf, le reste ça passe
+
+test d'un kruskal, j'ai pas le droit mais j'en fait un quand même:
+
+```{r}
+kruskal.B <- kruskal(LER.B$LERp, LER.B$Line, console = T)
+```
+Les lignes 4 et 13 c'est des mix de 3 espèces ==> pour celà qu'ils sont différents. La ligne 6 c'est le barley en monoculture 
+
+meilleur graphique : 
+
+```{r eval=FALSE, include=FALSE}
+#posthock.B <- kruskal.B$groups %>% 
+  # rownames_to_column("Line") %>% 
+  # mutate(Line = as.integer(Line))
+  # select(Line, groups)
+
+# LER%>%
+#   filter( Specie == "Barley") %>%
+#   group_by(Line)%>%
+#   full_join(posthock.B) %>%
+# 
+# view(LER)
+
+LER%>%
+  filter( Specie == "Barley") %>%
+  group_by(Line)%>%
+  summarise(mymean=mean(LERp, na.rm=T),
+            mysd=sd(LERp, na.rm=T))%>%
+  mutate(ymax=mymean+mysd, ymin=mymean-mysd) %>%
+  full_join(posthock.B) %>%
+  ggplot (aes(x = reorder(Line, mymean), y = mymean, label = groups,
+              ymin=ymin, ymax=ymax, na.rm=T)) + 
+  geom_point()+
+  geom_text(aes(y=2,5))+
+  geom_errorbar()+
+  labs(x="Line", y="LERp value", title = "LERp value in function of the barley treatment (monoculture or mix)")
+
+## problème dans l'affichage des lettres ==> je ne sait pas comment y remédier 
+```
+
+#### Mustard
+
+```{r}
+LER%>%
+  filter( Specie == "Mustard") %>%
+  group_by(Line)%>%
+  summarise(mymean=mean(LERp, na.rm=T),
+            mysd=sd(LERp, na.rm=T))%>%
+  mutate(ymax=mymean+mysd, ymin=mymean-mysd, ) %>%
+  ggplot (aes(x = reorder(Line, mymean), y = mymean,
+              ymin=ymin, ymax=ymax, na.rm=T)) + 
+  geom_point()+
+  geom_errorbar()+
+  labs(x="Line", y="LERp value for mustard", title = "LERp value in function of the mustard treatment (monoculture or mix)")
+```
+La ligne 14 c'est la moutarde en monoculture 
+La ligne 4 : qu'une seule valeur pour une zone est valables 
+
+anova:
+```{r}
+LER.m <- LER%>%
+  filter( Specie == "Mustard")
+
+anova.LER.m <-lm(LERp~Line,LER.m)
+anova(anova.LER.m)
+```
+pas de différence significative 
+vérification des hypothèses 
+
+```{r}
+par(mfrow = c(2,2))
+plot(anova.LER.m)
+```
+encore une fois on a vraiment très peu de valeurs dont 2 valeurs qui sont pas ouf (la 2 et la 8)
+
+test sans ces 2 valeurs : ==> en vrai flemme de ouf 
+
+#### Faba bean 
+```{r}
+LER%>%
+  filter( Specie == "Faba bean") %>%
+  group_by(Line)%>%
+  summarise(mymean=mean(LERp, na.rm=T),
+            mysd=sd(LERp, na.rm=T))%>%
+  mutate(ymax=mymean+mysd, ymin=mymean-mysd, ) %>%
+  ggplot (aes(x = reorder(Line, mymean), y = mymean,
+              ymin=ymin, ymax=ymax, na.rm=T)) + 
+  geom_point()+
+  geom_errorbar()+
+  labs(x="Line", y="LERp value for faba bean", title = "LERp value in function of the faba bean treatment (monoculture or mix)")
+```
+Line 4 : mix of 3
+Line 11: Faba bean in monoculture 
+
+```{r}
+LER.fb <- LER%>%
+  filter( Specie == "Faba bean")
+
+anova.LER.fb <-lm(LERp~Line,LER.fb)
+anova(anova.LER.fb)
+```
+
+pas de différence significatif 
+
+```{r}
+par(mfrow = c(2,2))
+plot(anova.LER.fb)
+```
+
+Pas ouf mais de toute façon pas énormément de valeurs 
+
+
+#### Fenugreek 
+
+```{r}
+LER%>%
+  filter( Specie == "Fenugreek") %>%
+  group_by(Line)%>%
+  summarise(mymean=mean(LERp, na.rm=T),
+            mysd=sd(LERp, na.rm=T))%>%
+  mutate(ymax=mymean+mysd, ymin=mymean-mysd, ) %>%
+  ggplot (aes(x = reorder(Line, mymean), y = mymean,
+              ymin=ymin, ymax=ymax, na.rm=T)) + 
+  geom_point()+
+  geom_errorbar()+
+  labs(x="Line", y="LERp value for fenugreek", title = "LERp value in function of the fenugreek treatment (monoculture or mix)")
+
+```
+Line 8: monoculture
+Line 3: mix of 2 
+Line 13: mix of 3
+
+```{r}
+LER.fn <- LER%>%
+  filter( Specie == "Fenugreek")
+
+anova.LER.fn <-lm(LERp~Line,LER.fn)
+anova(anova.LER.fn)
+```
+pas de différence significative 
+
+```{r}
+par(mfrow = c(2,2))
+plot(anova.LER.fn)
+```
+pas ouf 
+
+## Spad analysis
+
+### importation of the data and pivot : 
+```{r}
+spad_ini= read.table("4_spad.csv", header = TRUE,sep = ";", dec = ",")
+
+spad_ini%>%
+  mutate(Line = as.integer(Line), nature=as.factor(nature),
+         legumes=as.factor(legumes), Date=as.factor(Date))
+
+spad <- spad_ini %>%
+  pivot_longer(cols = Z1:Z3.4, 
+               names_to = "zone", values_to = "spad_value" )
+
+```
+
+We have a problem for the zones because the zones 1 don't have the same name
+
+### spad analysis for the first date 
+
+#### For all the treatments 
+```{r}
+spad.1 <- spad%>%
+  filter( Date == "17/10")
+
+```
+
+
+test anova
+
+```{r}
+anova.spad.all <-lm(spad_value~Line,spad.1)
+anova(anova.spad.all)
+```
+anova significative !!!!
+
+vérification des hypothèses de l'anova: 
+
+```{r}
+par(mfrow = c(2,2))
+plot(anova.spad.all)
+```
+hypothèse de normalité pas incroyable
+
+test de kruskal:
+
+```{r}
+kruskal.spad.all <- kruskal(spad.1$spad_value, spad.1$Line, console = T)
+```
+
+graph with the letters of the kruskal
+
+```{r}
+posthock.spad.all <- kruskal.spad.all$groups %>% 
+  rownames_to_column("Line") %>% 
+  select(Line, groups)%>%
+  mutate(Line= as.integer(Line))
+
+spad.1%>%
+  group_by(Line)%>%
+  summarise(mymean=mean(spad_value, na.rm=T),
+            mysd=sd(spad_value, na.rm=T))%>%
+  mutate(ymax=mymean+mysd, ymin=mymean-mysd) %>%
+  full_join(posthock.spad.all)%>%
+  ggplot (aes(x = reorder(Line, mymean), y = mymean, label = groups, 
+              ymin=ymin, ymax=ymax, na.rm=T)) + 
+  geom_point()+
+  geom_text(aes(y=85))+
+  geom_errorbar()+
+  labs(x="Line", y="spad value", title = "Sapad value in function of the treatment")
+```
+
+tukey because anova is great 
+
+```{r}
+
+```
+
+
+
+
+
+#### For barley 
+#### For mustard
+#### Radish
+#### For Faba bean
+#### Fenugreek
+
+
+
+
+
+
+### Spad analysis for the second date 
+
+
+
+
+```{r pressure, echo=FALSE}
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

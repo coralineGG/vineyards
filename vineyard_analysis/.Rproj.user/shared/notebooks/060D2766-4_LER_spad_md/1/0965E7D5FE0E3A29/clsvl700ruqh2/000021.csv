@@ -1,0 +1,14 @@
+"0","spad.1%>%
+  group_by(Line)%>%
+  summarise(mymean=mean(spad_value, na.rm=T),
+            mysd=sd(spad_value, na.rm=T))%>%
+  mutate(ymax=mymean+mysd, ymin=mymean-mysd) %>%
+  full_join(posthock.spad.all)%>%
+  ggplot (aes(x = reorder(Line, mymean), y = mymean, label = groups, 
+              ymin=ymin, ymax=ymax, na.rm=T)) + 
+  geom_point()+
+  geom_text(aes(y=85))+
+  geom_errorbar()+
+  labs(x=""Line"", y=""spad value"", title = ""Sapad value in function of the treatment"")
+"
+"2","Joining, by = ""Line"""
