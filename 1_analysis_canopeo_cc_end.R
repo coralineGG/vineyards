@@ -4,6 +4,7 @@ setwd("D:/études/SUPAGRO/2A/D4/github/vineyards")
 
 # library 
 library(tidyverse)
+library(agricolae)
 
 # get the data
 canopeo_cc_ini = read.table("Data_collection_canopeo_cc_only.csv", header = TRUE, sep = ";", dec = ",")
@@ -18,10 +19,14 @@ view(canopeo_cc)
 library(ggplot2)
 canopeo_cc%>%
   group_by(Line)%>%
-  ggplot (aes(x = Line, y = cover_rate, ymin=0, ymax=100, xmin=1, xmax=14)) + 
-  geom_point()
+  summarise(mymean=mean(cover_rate, na.rm=T),
+            mysd=sd(cover_rate, na.rm=T))%>%
+  mutate(ymax=mymean+mysd, ymin=mymean-mysd)%>%
+  ggplot (aes(x = reorder(Line, mymean), y = mymean, ymin=ymin, ymax=ymax)) + 
+  geom_point()+
+  geom_errorbar()+
+  labs(x="Line", y="Cover rate", title = "Percentage of coverance of the soil for different cover crops")
 
- 
 #Anova line
 anova.canopeo1.l<-lm(cover_rate~Line, canopeo_cc)
 anova(anova.canopeo1.l)
@@ -36,10 +41,10 @@ anova(anova.canopeo1.z)
 par(mfrow = c(1,1))
 plot(anova.canopeo1.z)
 
-tukey.canopeo.1<- HSD.test(anova.biomass.z, "zone", alpha = 0.05, group=TRUE, main = NULL, 
-                           console=FALSE)
+
+tukey.canopeo.1<- HSD.test(anova.canopeo1.z, "zone", alpha = 0.05, group=TRUE, main = NULL, console=FALSE)
 print(tukey.canopeo.1)
-table.letters.canopeo.1 <- tukey.z$groups %>%
+table.letters.canopeo.1 <- tukey.canopeo.1$groups %>%
   rownames_to_column("zone") %>%
   select(zone, groups)
 view(table.letters.canopeo.1)
@@ -49,10 +54,9 @@ canopeo_cc%>%
   summarise(mymean=mean(cover_rate, na.rm=T),
             mysd=sd(cover_rate, na.rm=T))%>%
   mutate(ymax=mymean+mysd, ymin=mymean-mysd)%>%
-  ggplot (aes(x = reorder(zone, mymean), y = mymean, ymin=ymin, ymax=ymax, label=groups)) + 
+  full_join(table.letters.canopeo.1)%>%
+  ggplot (aes(x = reorder(zone, mymean), y = mymean, ymin=ymin, ymax=ymax, label = groups)) + 
+  geom_text(aes(y = 80)) +
   geom_point()+
-  geom_text(aes(y=20))+
   geom_errorbar()+
   labs(x="Zone", y="Cover rate", title = "Percentage of coverance of the soil for different cover crops")
-
-
