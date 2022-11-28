@@ -353,6 +353,8 @@ spad_ini%>%
 spad <- spad_ini %>%
   pivot_longer(cols = Z1:Z3.4, 
                names_to = "zone", values_to = "spad_value" )
+spad%>%
+  na.omit()
 
 ```
 
@@ -362,21 +364,70 @@ We have a problem for the zones because the zones 1 don't have the same name
 
 #### For all the treatments 
 ```{r}
+spad.1 <- spad%>%
+  filter( Date == "17/10")
 
-spad%>%
-  filter( Date == "17/10") %>%
+```
+
+
+test anova
+
+```{r}
+anova.spad.all <-lm(spad_value~Line,spad.1)
+anova(anova.spad.all)
+```
+anova significative !!!!
+
+vérification des hypothèses de l'anova: 
+
+```{r}
+par(mfrow = c(2,2))
+plot(anova.spad.all)
+```
+hypothèse de normalité pas incroyable
+
+test de kruskal:
+
+```{r}
+kruskal.spad.all <- kruskal(spad.1$spad_value, spad.1$Line, console = T)
+```
+
+graph with the letters of the kruskal
+
+```{r}
+posthock.spad.all <- kruskal.spad.all$groups %>% 
+  rownames_to_column("Line") %>% 
+  select(Line, groups)%>%
+  mutate(Line= as.integer(Line))
+
+spad.1%>%
   group_by(Line)%>%
   summarise(mymean=mean(spad_value, na.rm=T),
             mysd=sd(spad_value, na.rm=T))%>%
   mutate(ymax=mymean+mysd, ymin=mymean-mysd) %>%
-  ggplot (aes(x = reorder(Line, mymean), y = mymean,
+  full_join(posthock.spad.all)%>%
+  ggplot (aes(x = reorder(Line, mymean), y = mymean, label = groups, 
               ymin=ymin, ymax=ymax, na.rm=T)) + 
   geom_point()+
+  geom_text(aes(y=85))+
   geom_errorbar()+
   labs(x="Line", y="spad value", title = "Sapad value in function of the treatment")
+```
+
+tukey because anova is great 
+
+```{r}
+# tukey.spad.all.1 <- HSD.test(spad.1, "Line", alpha=0.05, group=TRUE, main = NULL, console = FALSE)
+# print(tukey.spad.all.1)
+# posthock.spad.all.2 <- tukey.spad.all.1%>%
+#   rownames_to_column("Line")%>%
+#   select(Line, groups)
+# 
+# view(posthock.spad.all.2)
 
 ```
 
+Il est possible de faire la même chose pour les espèces séparément entre les monoculture et les mixes 
 #### For barley 
 #### For mustard
 #### Radish
@@ -384,11 +435,27 @@ spad%>%
 #### Fenugreek
 
 
-
-
-
-
 ### Spad analysis for the second date 
+je ne vait pas le faire c'est juste un copier coller 
+
+### Spad analysis of the impact of the legume and the mix or monoculture effect
+```{r}
+spad%>%
+  group_by(Line)%>%
+  ggplot (aes(x = nature, y = legumes, na.rm=T)) + 
+  geom_jitter()+
+  labs(x="Nature of the treatment", y="Presence of legume in the treatment", title = "Distributions of spad values between the nature of the treatment and the presence or not of legumes in the treatment")
+```
+same repartition between mix and monoculture and with or without legumes in the treatment  
+
+test statistique 
+
+```{r}
+anova.spad.legumes.mix <-lm(spad$spad_value~spad$nature+spad$legumes+spad$nature*spad$legumes, spad)
+anova(anova.spad.legumes.mix)
+```
+
+
 
 
 
