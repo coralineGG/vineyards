@@ -20,31 +20,28 @@ view(canopeo_weed)
 
 #Graph 
 library(ggplot2)
-canopeo_weed%>%
-  group_by(line)%>%
-  ggplot (aes(x = line, y = weed_cover_rate, ymin=0, ymax=100, xmin=1, xmax=14)) + 
-  geom_point()
 
-#Anova
-anova.canopeo<-lm(weed_cover_rate~line, canopeo_weed)
-anova(anova.canopeo)
-
-par(mfrow = c(2,2))
-plot(anova.canopeo)
+#Anova pour létude des lignes
+anova.canopeo.l<-lm(weed_cover_rate~line, canopeo_weed)
+anova(anova.canopeo.l)
 par(mfrow = c(1,1))
+plot(anova.canopeo.l)
 
 # Kruskal
 kruskal <- kruskal(canopeo_weed$weed_cover_rate, canopeo_weed$line, console = T)
-posthock <- kruskal$groups %>% 
-  rownames_to_column("line") %>% 
+table.letters.covers <- kruskal$groups %>%
+  rownames_to_column("line") %>%
   select(line, groups)
+view(table.letters.covers)
+#pas sur de ce à quoi ça sert...
+#est-ce que c'est pour grouper les lignes associée par le kruskal entre elles ?
 
 canopeo_weed%>%
   group_by(line)%>%
   summarise(mymean=mean(weed_cover_rate, na.rm=T),
             mysd=sd(weed_cover_rate, na.rm=T))%>%
   mutate(ymax=mymean+mysd, ymin=mymean-mysd) %>% 
-  full_join(posthock) %>% 
+  full_join(table.letters.covers) %>% 
   ggplot (aes(x = reorder(line, mymean), y = mymean, label = groups,
               ymin=ymin, ymax=ymax)) + 
   geom_point()+
@@ -53,28 +50,64 @@ canopeo_weed%>%
   labs(x="Line", y="Weed cover rate", title = "Percentage of weed soil coverance when different cover crops were grown")
 
 
-# posthoc <- HSD.test(anova.canopeo, "zone", group = T, console = T)
-# posthoc2 <- posthoc$group %>%
-#   rownames_to_column("zone")
+# tukey.weed.3 <- HSD.test(anova.canopeo.l, "line", group = T, console = T)
+# print (tukey.weed.3)
+# table.letters.weed.3<- tukey.weed.3$group %>%
+#   rownames_to_column("line")%>%
+#   select(line,groups)
+# # je ne sais pas non plus à quoi ça sert mais on l'utilise après
 # 
-# canopeo_weed <- full_join(canopeo_weed, 
-#                           select(posthoc2, c(zone, groups)))
-# 
-# ggplot ( canopeo_weed, aes(x = zone, y = weed_cover_rate, label = groups)) + 
+# canopeo_weed <- full_join(canopeo_weed,
+#                           select(tukey, c(zone, groups)))
+
+## c'est tous les même d'après tukey
+
+# ggplot ( canopeo_weed, aes(x = zone, y = weed_cover_rate, label = groups)) +
 #   geom_boxplot() +
 #   geom_text(aes(y = max(weed_cover_rate)+ 0.2*max(weed_cover_rate))) +
 #   labs(x="Zone", y="Weed cover rate", title = "Percentage of weed soil coverance when different cover crops were grown")
-# 
 
-# p-value > 0,05 so no tuckey test
+#pas de graph parce que pas de diff d'près tukey
+
+#Anova pour l'étude des zones
+anova.canopeo.z<-lm(weed_cover_rate~zone, canopeo_weed)
+anova(anova.canopeo.z)
+par(mfrow = c(1,1))
+plot(anova.canopeo.z)
+
+# kruskal
+kruskal.weed.zone <- kruskal(canopeo_weed$weed_cover_rate, canopeo_weed$zone, console = T)
+table.letters.covers <- kruskal$groups %>%
+  rownames_to_column("line") %>%
+  select(line, groups)
+view(table.letters.covers)
+
+
+tuckey.z<- HSD.test(anova.canopeo.z, "zone", alpha = 0.05, group=TRUE, main = NULL, 
+         console=FALSE)
+print(tuckey.z)
+
+
+canopeo_weed%>%
+  group_by(zone)%>%
+  summarise(mymean=mean(weed_cover_rate, na.rm=T),
+            mysd=sd(weed_cover_rate, na.rm=T))%>%
+  mutate(ymax=mymean+mysd, ymin=mymean-mysd) %>% 
+  ggplot (aes(x = reorder(zone, mymean), y = mymean, label = zone,
+              ymin=ymin, ymax=ymax)) + 
+  geom_point()+
+  geom_text(aes(y = 75)) +
+  geom_errorbar()+
+  labs(x="Zone", y="Weed cover rate", title = "Percentage of weed soil coverance when different cover crops were grown")
+
 
 #t.test : comparing the control to all the treatments
-# control_cover_rate<-canopeo_weed%>%
-#   filter(line==1)
-# treatment_cover_rate<-canopeo_weed%>%
-#   filter(line!=1)
-# 
-# t.test(control_cover_rate$weed_cover_rate, treatment_cover_rate$weed_cover_rate)
+control_cover_rate<-canopeo_weed%>%
+  filter(line==1)
+treatment_cover_rate<-canopeo_weed%>%
+  filter(line!=1)
+
+t.test(control_cover_rate$weed_cover_rate, treatment_cover_rate$weed_cover_rate)
 
 #t.test : comparing the mono to the mix
 mono_cover_rate<-canopeo_weed%>%
@@ -84,15 +117,17 @@ mix_cover_rate<-canopeo_weed%>%
 
 t.test(mono_cover_rate$weed_cover_rate, mix_cover_rate$weed_cover_rate)
 
-lines <- c("6","7","8","11","14")
-testfiltre <- canopeo_weed %>% 
-  filter(line %in% lines)
+# lines <- c("6","7","8","11","14")
+# testfiltre <- canopeo_weed %>% 
+#   filter(line %in% lines)
+#je crois que c'est pour une autre question
 
 
 
 ###########Weed biomass################
 
 #get the data for the biomass
+
 biomass_weed_ini = read.table("3_weed_biomass.csv", header = TRUE, sep = ";", dec = ",")
 view(biomass_weed_ini)
 # we wanted to turn the column named "zone_X" into one 
@@ -105,24 +140,52 @@ view(biomass_weed)
 library(ggplot2)
 biomass_weed%>%
   group_by(line)%>%
-  ggplot (aes(x = line, y = weed_biomass, ymin=0, ymax=30, xmin=1, xmax=14)) + 
-  geom_point()
-
-biomass_weed%>%
-  group_by(line)%>%
   summarise(mymean=mean(weed_biomass, na.rm=T),
             mysd=sd(weed_biomass, na.rm=T))%>%
   mutate(ymax=mymean+mysd, ymin=mymean-mysd)%>%
-  ggplot (aes(x = line, y = mymean, ymin=ymin, ymax=ymax)) + 
+  ggplot (aes(x = reorder(line, mymean), y = mymean, ymin=ymin, ymax=ymax)) + 
   geom_point()+
   geom_errorbar()+
   labs(x="Line", y="Weed biomass", title = "Biomass of the weeds per line")
 
-#Anova
-anova.biomass<-lm(weed_biomass~line, biomass_weed)
-anova(anova.biomass)
+#Anova line
+anova.biomass.l<-lm(weed_biomass~line, biomass_weed)
+anova(anova.biomass.l)
 
+#pouvait-on faire l'anova ?
+par(mfrow = c(1,1))
+plot(anova.biomass)
+#oui, on peut donc dire que l'expérience ne permet pas de différencier les traitements 
+# on ne fait pas de tukey"
 # p-value > 0,05 so no tuckey test
+
+# # anova zones
+# anova.biomass.z<-lm(weed_biomass~zone, biomass_weed)
+# anova(anova.biomass.z)
+# par(mfrow = c(1,1))
+# plot(anova.biomass)
+# 
+# #tukey test
+# tukey.z<- HSD.test(anova.biomass.z, "zone", alpha = 0.05, group=TRUE, main = NULL, 
+#                     console=FALSE)
+# print(tuckey.z)
+# table.letters.biomass <- tukey.z$groups %>%
+#   rownames_to_column("zone") %>%
+#   select(zone, groups)
+# view(table.letters.biomass)
+
+# biomass_weed%>%
+#   group_by(zone)%>%
+#   summarise(mymean=mean(weed_biomass, na.rm=T),
+#             mysd=sd(weed_biomass, na.rm=T))%>%
+#   mutate(ymax=mymean+mysd, ymin=mymean-mysd)%>%
+#   full_join(table.letters.biomass) %>% # ne finctionne pas
+#   ggplot (aes(x = reorder(zone, mymean), y = mymean, ymin=ymin, ymax=ymax, label= groups)) + 
+#   geom_point()+
+#   geom_text(aes(y=20))+
+#   geom_errorbar()+
+#   labs(x="Zone", y="Weed biomass", title = "Biomass of the weeds per line")
+
 
 #t.test : comparing the control to all the treatments
 control_biomass<-biomass_weed%>%
@@ -148,7 +211,7 @@ view(density_ini)
 # we wanted to turn the column named "zone_X" into one 
 #in order for the data to be easier to analyse
 density_w_cc <-density_ini%>%
-  pivot_longer(cols = Zone.1:Zone.3, names_to = "zone",values_to = "weed_density" )
+  pivot_longer(cols = Z1:Z3, names_to = "zone",values_to = "weed_density" )
 view(density_w_cc)
 
 weed_density<-density_w_cc%>%
@@ -159,24 +222,48 @@ view(weed_density)
 library(ggplot2)
 weed_density%>%
   group_by(Line)%>%
-  ggplot (aes(x = Line, y = weed_density, ymin=0, ymax=80, xmin=1, xmax=14)) + 
-  geom_point()
-
-weed_density%>%
-  group_by(Line)%>%
   summarise(mymean=mean(weed_density, na.rm=T),
             mysd=sd(weed_density, na.rm=T))%>%
   mutate(ymax=mymean+mysd, ymin=mymean-mysd)%>%
-  ggplot (aes(x = Line, y = mymean, ymin=ymin, ymax=ymax)) + 
+  ggplot (aes(x = reorder(Line, mymean), y = mymean, ymin=ymin, ymax=ymax)) + 
   geom_point()+
   geom_errorbar()+
   labs(x="Line", y="Weed density", title = "Weed density per line 19 days after the sowing date")
 
-#Anova
-anova.density<-lm(weed_density~Line, weed_density)
-anova(anova.density)
+#Anova line
+anova.density.l<-lm(weed_density~Line, weed_density)
+anova(anova.density.l)
+par(mfrow = c(1,1))
+plot(anova.biomass)
 
 # no tuckey test
+
+# # anova zone
+# anova.density.z<-lm(weed_density~zone, weed_density)
+# anova(anova.density.z)
+# par(mfrow = c(1,1))
+# plot(anova.biomass)
+# 
+# # tukey
+# tukey.density.z<- HSD.test(anova.density.z, "zone", alpha = 0.05, group=TRUE, main = NULL, 
+#                    console=FALSE)
+# print(tukey.density.z)
+# table.letters.density <- tukey.z$groups %>%
+#   rownames_to_column("zone") %>%
+#   select(zone, groups)
+# view(table.letters.density)
+# 
+# weed_density%>%
+#   group_by(zone)%>%
+#   summarise(mymean=mean(weed_density, na.rm=T),
+#             mysd=sd(weed_density, na.rm=T))%>%
+#   mutate(ymax=mymean+mysd, ymin=mymean-mysd)%>%
+#   full_join(table.letters.biomass) %>% 
+#   ggplot (aes(x = reorder(zone, mymean), y = mymean, ymin=ymin, ymax=ymax, label= groups)) + 
+#   geom_point()+
+#   geom_text(aes(y=50))+
+#   geom_errorbar()+
+#   labs(x="Zone", y="Weed density", title = "density of the weeds per line")
 
 #t.test : comparing the control to all the treatments
 control_density<-weed_density%>%
