@@ -34,10 +34,6 @@ anova(anova.wbr)
 par(mfrow = c(2,2))
 plot(anova.wbr)
 par(mfrow = c(1,1))
-#canopeo_weed_ini = weed_biomass
-#canopeo_weed = weed_wbr
-#weed_cover_rate = weed_biomass_ratio
-#anova.canopeo = anova.wbr
 
 # Kruskal
 kruskal <- kruskal(weed_wbr$weed_biomass_ratio, weed_wbr$line, console = T)
