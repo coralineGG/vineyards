@@ -1,0 +1,38 @@
+Line ;Specie ;mono_mix;Z1;Z2;Z3
+1;Weed;mono;3,27;6,7;14
+2;Barley;mix;1,2;16,1;2,3
+2;Mustard;mix;5,6;41,2;1,5
+2;Weed;mix;9,9;1,7;12,4
+3;Radish;mix;2,7;42,6;4,6
+3;Fenugreek;mix;0,8;0,4;0
+3;Weed;mix;3,6;12,2;26,2
+4;Barley;mix;0,5;0,4;0
+4;Faba bean;mix;3,6;13,6;7,24
+4;Mustard;mix;0,01;0;0,6
+4;Weed;mix;4,1;2,7;15,3
+5;Barley;mix;2,4;19,7;1,7
+5;Faba bean;mix;2;8,4;11,7
+5;Weed;mix;10,2;3,2;19,5
+6;Barley;mono;7,98;26,3;30,6
+6;Weed;mix;4,5;5,7;2,2
+7;Radish;mono;24,3;78,2;7,85
+7;Weed;mix;4,3;0,9;9,5
+8;Fenugreek;mono;3;4;6,1
+8;Weed;mix;7,9;20,5;6,1
+9;Radish;mix;13,7;33,1;17,4
+9;Barley;mix;3,2;10,1;3,1
+9;Weed;mix;9,3;0,1;7,7
+10;Fenugreek;mix;1,7;1,97;1,8
+10;Barley;mix;0,4;13,3;5,8
+10;Weed;mix;15,6;3,3;11,6
+11;Faba bean;mono;9,6;22,6;18,9
+11;Weed;mix;10,5;0,4;7,7
+12;Mustard;mix;1,6;37;2,6
+12;Faba bean;mix;4,3;9,8;9,7
+12;Weed;mix;13;1,5;6,3
+13;Radish;mix;0;0;0
+13;Barley;mix;0,1;0,5;0
+13;Fenugreek;mix;1,7;4,4;0
+13;Weed;mix;11,6;11,2;11,5
+14;Mustard;mono;11;8,8;15,2
+14;Weed;mix;17,9;9,8;7,1

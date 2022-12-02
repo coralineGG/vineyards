@@ -1,0 +1,4 @@
+"0","LER_best <- LER %>%"
+"0","  rownames_to_column(""observation"")%>%"
+"0","  filter (observation != 86)%>%"
+"0","  filter( observation != 5)"

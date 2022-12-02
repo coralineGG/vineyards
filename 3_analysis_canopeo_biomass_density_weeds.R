@@ -6,6 +6,7 @@
 library(tidyverse)
 library(agricolae)
 
+
 # get the data for the cover rate
 canopeo_weed_ini = read.table("data_canopeo_weeds.csv", header = TRUE, sep = ";", dec = ",")
 view(canopeo_weed_ini)
