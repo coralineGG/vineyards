@@ -204,17 +204,10 @@ Les lignes 4 et 13 c'est des mix de 3 espèces ==> pour celà qu'ils sont diffé
 meilleur graphique : 
 
 ```{r eval=FALSE, include=FALSE}
-#posthock.B <- kruskal.B$groups %>% 
-  # rownames_to_column("Line") %>% 
-  # mutate(Line = as.integer(Line))
-  # select(Line, groups)
-
-# LER%>%
-#   filter( Specie == "Barley") %>%
-#   group_by(Line)%>%
-#   full_join(posthock.B) %>%
-# 
-# view(LER)
+posthock.B <- kruskal.B$groups %>%
+  rownames_to_column("Line") %>%
+  mutate(Line = as.integer(Line)) %>%
+  select(Line, groups)
 
 LER%>%
   filter( Specie == "Barley") %>%
@@ -232,6 +225,7 @@ LER%>%
 
 ## problème dans l'affichage des lettres ==> je ne sait pas comment y remédier 
 ```
+
 
 #### Mustard
 
@@ -384,7 +378,7 @@ vérification des hypothèses de l'anova:
 par(mfrow = c(2,2))
 plot(anova.spad.all)
 ```
-hypothèse de normalité pas incroyable
+hypothèse de normalité pas incroyable ==> est ce qu'on peut vraiment faire une anova?
 
 test de kruskal:
 
@@ -414,7 +408,7 @@ spad.1%>%
   labs(x="Line", y="spad value", title = "Sapad value in function of the treatment")
 ```
 
-tukey because anova is great 
+tukey because anova is great ??
 
 ```{r}
 # tukey.spad.all.1 <- HSD.test(spad.1, "Line", alpha=0.05, group=TRUE, main = NULL, console = FALSE)
@@ -438,6 +432,60 @@ Il est possible de faire la même chose pour les espèces séparément entre les
 ### Spad analysis for the second date 
 je ne vait pas le faire c'est juste un copier coller 
 
+```{r}
+spad.2 <- spad%>%
+  filter( Date == "07/11")
+
+```
+
+
+test anova
+
+```{r}
+anova.spad.all.2 <-lm(spad_value~Line,spad.2)
+anova(anova.spad.all.2)
+```
+anova significative 
+
+vérification des hypothèses :
+
+```{r}
+par(mfrow = c(2,2))
+plot(anova.spad.all)
+```
+la normalité est pas dingue 
+
+test de kruskal:
+```{r}
+kruskal.spad.all.2 <- kruskal(spad.2$spad_value, spad.2$Line, console = T)
+
+```
+
+graph with letters of the kruskal
+
+```{r}
+posthock.spad.all.2 <- kruskal.spad.all.2$groups %>% 
+  rownames_to_column("Line") %>% 
+  select(Line, groups)%>%
+  mutate(Line= as.integer(Line))
+
+spad.2%>%
+  group_by(Line)%>%
+  summarise(mymean=mean(spad_value, na.rm=T),
+            mysd=sd(spad_value, na.rm=T))%>%
+  mutate(ymax=mymean+mysd, ymin=mymean-mysd) %>%
+  full_join(posthock.spad.all.2)%>%
+  ggplot (aes(x = reorder(Line, mymean), y = mymean, label = groups, 
+              ymin=ymin, ymax=ymax, na.rm=T)) + 
+  geom_point()+
+  geom_text(aes(y=65))+
+  geom_errorbar()+
+  labs(x="Line", y="spad value", title = "Sapad value of 07/11 in function of the treatment")
+```
+
+
+
+
 ### Spad analysis of the impact of the legume and the mix or monoculture effect
 ```{r}
 spad%>%
@@ -446,7 +494,7 @@ spad%>%
   geom_jitter()+
   labs(x="Nature of the treatment", y="Presence of legume in the treatment", title = "Distributions of spad values between the nature of the treatment and the presence or not of legumes in the treatment")
 ```
-same repartition between mix and monoculture and with or without legumes in the treatment  
+same repartition between mix and monoculture and with or without legumes in the treatment ==> I don't know how to analyse it 
 
 test statistique 
 
@@ -455,8 +503,7 @@ anova.spad.legumes.mix <-lm(spad$spad_value~spad$nature+spad$legumes+spad$nature
 anova(anova.spad.legumes.mix)
 ```
 
-
-
+The spad values are mostly explained by the interaction between the nature of the cover and the presence of legumes.
 
 
 
