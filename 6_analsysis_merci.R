@@ -28,13 +28,13 @@ merci_cc%>%
   labs(x="Line", y="Cover rate", title = "Percentage of coverance of the soil for different cover crops")
 
 #Anova line
-anova.merci1.l<-lm(merci_value~Line, merci_cc)
-anova(anova.merci1.l)
+anova.merci<-lm(merci_value~Line, merci_cc)
+anova(anova.merci)
 par(mfrow = c(1,1))
-plot(anova.merci1.l)
+plot(anova.merci)
 
-kruskal <- kruskal(merci_cc$merci_value, canopeo_weed$line, console = T)
-table.letters.merci <- kruskal$groups %>%
+kruskal.merci <- kruskal(merci_cc$merci_value, merci_cc$Line, console = T)
+table.letters.merci <- kruskal.merci$groups %>%
   rownames_to_column("line") %>%
   select(line, groups)
 view(table.letters.merci)
