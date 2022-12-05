@@ -2,6 +2,9 @@
 library(tidyverse)
 library(ggplot2)
 
+getwd()
+setwd(paste0(getwd(),"/vineyard_analysis"))
+
 ### help to build the dataset ####### 
 
 # get the data of the biomass
@@ -53,6 +56,7 @@ view(LER)
 LER%>%
   filter( mono_mix == "mix") %>%
   filter (Specie != "Weed") %>%
+  mutate(Line=as.factor(Line))%>%
   group_by(Line)%>%
   summarise(mymean=mean(LER_cc, na.rm=T),
             mysd=sd(LER_cc, na.rm=T))%>%
@@ -66,6 +70,7 @@ LER%>%
 #Test anova sur les LER
 anova.LER <-lm(LER_cc~Line, LER)
 anova(anova.LER)
+summary(anova.LER)
 
 par(mfrow = c(2,2))
 plot(anova.LER)

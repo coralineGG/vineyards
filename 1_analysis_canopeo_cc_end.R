@@ -1,6 +1,6 @@
 # working directory
 getwd()
-setwd("D:/études/SUPAGRO/2A/D4/github/vineyards")
+setwd("/home/lucile/Bureau/Mpl Sup Agro/2A/project/vineyards")
 
 # library 
 library(tidyverse)
@@ -15,6 +15,9 @@ canopeo_cc <- canopeo_cc_ini%>%
   select (Line, Z1, Z2, Z3)%>%
   pivot_longer(cols = Z1:Z3, names_to = "zone",values_to = "cover_rate" )
 view(canopeo_cc)
+
+canopeo_cc%>%
+  mutate(Line=as.factor(Line))->canopeo_cc
 #Graph 
 library(ggplot2)
 canopeo_cc%>%
@@ -27,9 +30,14 @@ canopeo_cc%>%
   geom_errorbar()+
   labs(x="Line", y="Cover rate", title = "Percentage of coverance of the soil for different cover crops")
 
+canopeo_cc%>%
+  ggplot()+
+  aes(x=Line,y=cover_rate,fill=Line)+
+  geom_boxplot()
 #Anova line
-anova.canopeo1.l<-lm(cover_rate~Line, canopeo_cc)
+anova.canopeo1.l<-lm(cover_rate~as.factor(Line), canopeo_cc)
 anova(anova.canopeo1.l)
+summary(anova.canopeo1.l)
 par(mfrow = c(1,1))
 plot(anova.canopeo1.l)
 
@@ -60,3 +68,4 @@ canopeo_cc%>%
   geom_point()+
   geom_errorbar()+
   labs(x="Zone", y="Cover rate", title = "Percentage of coverance of the soil for different cover crops")
+summary(anova.canopeo1.z)
