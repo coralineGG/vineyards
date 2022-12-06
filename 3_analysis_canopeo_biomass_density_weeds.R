@@ -30,6 +30,11 @@ plot(anova.canopeo.l)
 anova.canopeo.l.z <- lm(weed_cover_rate~line+zone, canopeo_weed)
 anova(anova.canopeo.l.z)
 summary(anova.canopeo.l.z)
+
+anova.canopeo.z<-lm(weed_cover_rate~zone, canopeo_weed)
+anova(anova.canopeo.z)
+summary(anova.canopeo.z)
+
 # Kruskal
 kruskal <- kruskal(canopeo_weed$weed_cover_rate, canopeo_weed$line, console = T)
 table.letters.covers <- kruskal$groups %>%
