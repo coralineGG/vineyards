@@ -30,10 +30,10 @@ library(agricolae)
 ### data importation 
 
 ```{r}
-LER= read.table("4_LER.csv", header = TRUE,sep = ";", dec = ",")
+LER.1= read.table("4_LER.csv", header = TRUE,sep = ";", dec = ",")
 
-LER%>%
-  mutate(Line = as.integer(Line))
+LER<- LER.1%>%
+  mutate(Line = as.factor(Line))
 ```
 
 
@@ -43,7 +43,7 @@ LER%>%
 
 graph of the values of LER in function of the treatment
 ```{r}
-LER%>%
+LER %>%
   filter( mono_mix == "mix") %>%
   filter (Specie != "Weed") %>%
   group_by(Line)%>%
@@ -54,64 +54,46 @@ LER%>%
               ymin=ymin, ymax=ymax, na.rm=T)) + 
   geom_point()+
   geom_errorbar()+
-  labs(x="Line", y="LER value", title = "LER value in function of the treatment")
+  labs(x="Number of the treatment", y="LER value", title = "LER value in function of the treatment")
 
 ```
+choisir celui là parce que le boxplot on ne voit pas bien les petits points 
 
-Test anova sur les LER : 
+
+Graph en boxplot 
 
 ```{r}
-anova.LER <-lm(LER_cc~Line, LER)
-anova(anova.LER)
+view(LER)
+
+LER %>%
+  filter( mono_mix == "mix")%>%
+  filter (Specie != "Weed") %>%
+  group_by(Line)%>%
+  #summarise(mymean=mean(LER_cc, na.rm=T))%>%
+  ggplot ()+
+  aes(x = Line, y=LER_cc, fill=Line)+
+  geom_boxplot()+
+  labs(x="Number of treatment", y="LER value", title = "LER value in function of the treatment")
+  
 ```
-not significative difference between the treatments 
+n'arrive pas à reorder, il faudrait enlever des valeurs parce que qu'elles ne permettent pas de bien voir la répartition des autres
 
 vérification des hypothèses de l'anova :
 
 ```{r}
-par(mfrow = c(2,2))
-plot(anova.LER)
+shapiro.test(LER$LER_cc)
+
 ```
+shapiro test pvalue<0,05 ==> no normality of LER_cc
 
-==> les points 5 et 86 sont trop différents des autres valeurs, on va les enlever 
-
-nouveau tableau sans les lignes 5 et 86 : 
-
+kruskal wallis test 
 ```{r}
-LER_best <- LER %>%
-  rownames_to_column("observation")%>%
-  filter (observation != 86)%>%
-  filter( observation != 5)
+kruskal.LER.cc <- kruskal(LER$LER_cc, LER$Line,  console = T)
 ```
+no significantive difference 
 
-nouveau graphique : 
 
-```{r}
-LER_best%>%
-  filter( mono_mix == "mix") %>%
-  filter (Specie != "Weed") %>%
-  group_by(Line)%>%
-  summarise(mymean=mean(LER_cc, na.rm=T),
-            mysd=sd(LER_cc, na.rm=T))%>%
-  mutate(ymax=mymean+mysd, ymin=mymean-mysd) %>%
-  ggplot (aes(x = reorder(Line, mymean), y = mymean,
-              ymin=ymin, ymax=ymax, na.rm=T)) + 
-  geom_point()+
-  geom_errorbar()+
-  labs(x="Line", y="LER value", title = "LER value in function of the treatment")
-```
-
-test avec une anova et vérification des hypothèses 
-
-```{r}
-anova.LER.best <-lm(LER_cc~Line, LER_best)
-anova(anova.LER.best)
-```
-```{r}
-par(mfrow = c(2,2))
-plot(anova.LER.best)
-```
-### Analysis of the LERp for each specie between mix and monoculture 
+### Analysis of the LERp for each specie between mix and monoculture -- NOT USEFUL AS SAID AURELIE
 
 #### Radish 
 
@@ -132,12 +114,24 @@ LER%>%
 commentaire : la ligne 13 c'est un mélange avec le radis qui n'a pas marché du tout
 la ligne 7 c'est le radis en monoculture ==> normal qu'il n'y ai pas de variation ==> LERp=1
 
+graph avec un boxplt :
+```{r}
+LER %>%
+  filter( Specie == "Radish") %>%
+  group_by(Line)%>%
+  ggplot ()+
+  aes(x=Line, y=LERp, fill=Line)+
+  geom_boxplot()+
+  labs(x="Line", y="LERp value", title = "LERp value in function of the radish treatment (monoculture or mix)")
+```
+
 test avec une anova :
 ```{r}
 LER.radish <- LER%>%
   filter( Specie == "Radish")
-anova.LER.radish <-lm(LERp~Line,LER.radish)
+anova.LER.radish <-lm(LERp~Line+zone,LER.radish)
 anova(anova.LER.radish)
+summary(anova.LER.radish)
 ```
 pas de différence significative entre les treatments
 
@@ -176,6 +170,19 @@ LER%>%
 ```
 On peut quand même voir que la plus part des treatments ils sont en dessous de 1 / du controle en ligne 6 
 
+graph avec les boxplot
+```{r}
+LER %>%
+  filter( Specie == "Barley") %>%
+  group_by(Line)%>%
+  ggplot ()+
+  aes(x=Line, y=LERp, fill=Line)+
+  geom_boxplot()+
+  labs(x="Line", y="LERp value", title = "LERp value in function of the barley treatment (monoculture or mix)")
+```
+
+
+
 anova :
 ```{r}
 LER.B <- LER%>%
@@ -183,6 +190,7 @@ LER.B <- LER%>%
 
 anova.LER.B <-lm(LERp~Line,LER.B)
 anova(anova.LER.B)
+summary(anova.LER.B)
 ```
 pas de différence significative entre les treatments
 
@@ -206,7 +214,7 @@ meilleur graphique :
 ```{r eval=FALSE, include=FALSE}
 posthock.B <- kruskal.B$groups %>%
   rownames_to_column("Line") %>%
-  mutate(Line = as.integer(Line)) %>%
+  mutate(Line = as.factor(Line)) %>%
   select(Line, groups)
 
 LER%>%
@@ -224,6 +232,18 @@ LER%>%
   labs(x="Line", y="LERp value", title = "LERp value in function of the barley treatment (monoculture or mix)")
 
 ## problème dans l'affichage des lettres ==> je ne sait pas comment y remédier 
+```
+
+```{r}
+LER %>%
+  filter( Specie == "Barley") %>%
+  group_by(Line)%>%
+  full_join(posthock.B) %>%
+  ggplot ()+
+  aes(x=Line, y=LERp, fill=Line, label = groups)+
+  geom_boxplot()+
+  geom_text(aes(y=2,5))+
+  labs(x="Line", y="LERp value", title = "LERp value in function of the barley treatment (monoculture or mix)")
 ```
 
 
@@ -245,6 +265,18 @@ LER%>%
 La ligne 14 c'est la moutarde en monoculture 
 La ligne 4 : qu'une seule valeur pour une zone est valables 
 
+graph en boxplot:
+```{r}
+LER %>%
+  filter( Specie == "Mustard") %>%
+  group_by(Line)%>%
+  ggplot ()+
+  aes(x=Line, y=LERp, fill=Line)+
+  geom_boxplot()+
+  labs(x="Line", y="LERp value", title = "LERp value in function of the mustard treatment (monoculture or mix)")
+```
+on a vraiment des valeurs beaucoup trop hautes et ça ne nous permet pas de voir les differences entre les lignes 4 et 14
+
 anova:
 ```{r}
 LER.m <- LER%>%
@@ -252,6 +284,7 @@ LER.m <- LER%>%
 
 anova.LER.m <-lm(LERp~Line,LER.m)
 anova(anova.LER.m)
+summary(anova.LER.m)
 ```
 pas de différence significative 
 vérification des hypothèses 
@@ -281,12 +314,26 @@ LER%>%
 Line 4 : mix of 3
 Line 11: Faba bean in monoculture 
 
+graph with boxplot 
+
+```{r}
+LER %>%
+  filter( Specie == "Faba bean") %>%
+  group_by(Line)%>%
+  ggplot ()+
+  aes(x=Line, y=LERp, fill=Line)+
+  geom_boxplot()+
+  labs(x="Line", y="LERp value", title = "LERp value in function of the faba bean treatment (monoculture or mix)")
+```
+
+
 ```{r}
 LER.fb <- LER%>%
   filter( Specie == "Faba bean")
 
 anova.LER.fb <-lm(LERp~Line,LER.fb)
 anova(anova.LER.fb)
+summary(anova.LER.fb)
 ```
 
 pas de différence significatif 
@@ -319,12 +366,25 @@ Line 8: monoculture
 Line 3: mix of 2 
 Line 13: mix of 3
 
+boxplot:
+```{r}
+LER %>%
+  filter( Specie == "Fenugreek") %>%
+  group_by(Line)%>%
+  ggplot ()+
+  aes(x=Line, y=LERp, fill=Line)+
+  geom_boxplot()+
+  labs(x="Line", y="LERp value", title = "LERp value in function of the fenugreek treatment (monoculture or mix)")
+```
+
+
 ```{r}
 LER.fn <- LER%>%
   filter( Specie == "Fenugreek")
 
 anova.LER.fn <-lm(LERp~Line,LER.fn)
 anova(anova.LER.fn)
+summary(anova.LER.fb)
 ```
 pas de différence significative 
 
@@ -334,41 +394,76 @@ plot(anova.LER.fn)
 ```
 pas ouf 
 
-## Spad analysis
+
+## Spad analysis ##############
 
 ### importation of the data and pivot : 
 ```{r}
-spad_ini= read.table("4_spad.csv", header = TRUE,sep = ";", dec = ",")
+spad = read.table("4_bis_spad.csv", header = TRUE,sep = ",", dec = ".")
 
-spad_ini%>%
-  mutate(Line = as.integer(Line), nature=as.factor(nature),
-         legumes=as.factor(legumes), Date=as.factor(Date))
-
-spad <- spad_ini %>%
-  pivot_longer(cols = Z1:Z3.4, 
-               names_to = "zone", values_to = "spad_value" )
 spad%>%
-  na.omit()
+  mutate(Line = as.factor(Line), nature=as.factor(nature),
+         legumes=as.factor(legumes), Date=as.factor(Date)) -> spad
 
 ```
 
-We have a problem for the zones because the zones 1 don't have the same name
+### spad analysis for both dates
 
-### spad analysis for the first date 
+#### For all the treatments and all the dates 
+
+verification that we can use anova 
+```{r}
+shapiro.test(spad$spad_value)
+```
+pvalue < 0,05 ==> not normality of the values ==> can't use anova 
+
+test de kruskal:
+
+```{r}
+kruskal.spad.all <- kruskal(spad$spad_value, spad$Line, console = T)
+```
+
+graph with the letters of the kruskal
+
+```{r}
+posthock.spad.all <- kruskal.spad.all$groups %>% 
+  rownames_to_column("Line") %>% 
+  select(Line, groups)%>%
+  mutate(Line= as.factor(Line))
+
+spad%>%
+  group_by(Line)%>%
+  full_join(posthock.spad.all)%>%
+  ggplot () +
+  aes(x = Line, y = spad_value, label = groups, fill=Line)+
+  geom_text(aes(y=0))+
+  geom_boxplot()+
+  labs(x="Number of the treatment", y="Spad value", title = "Spad value in function of the treatment")
+```
+
+Il est possible de faire la même chose pour les espèces séparément entre les monoculture et les mixes 
+#### For barley 
+#### For mustard
+#### Radish
+#### For Faba bean
+#### Fenugreek
+
+
+### spad analysis for the first date - NOT interesting as we have it for all the dates 
 
 #### For all the treatments 
 ```{r}
 spad.1 <- spad%>%
   filter( Date == "17/10")
-
 ```
 
 
 test anova
 
 ```{r}
-anova.spad.all <-lm(spad_value~Line,spad.1)
-anova(anova.spad.all)
+anova.spad.all.1 <-lm(spad_value~Line+zone,spad.1)
+anova(anova.spad.all.1)
+summary(anova.spad.all.1)
 ```
 anova significative !!!!
 
@@ -393,7 +488,6 @@ posthock.spad.all <- kruskal.spad.all$groups %>%
   rownames_to_column("Line") %>% 
   select(Line, groups)%>%
   mutate(Line= as.integer(Line))
-
 spad.1%>%
   group_by(Line)%>%
   summarise(mymean=mean(spad_value, na.rm=T),
@@ -419,17 +513,9 @@ tukey because anova is great ??
 # 
 # view(posthock.spad.all.2)
 
-```
-
-Il est possible de faire la même chose pour les espèces séparément entre les monoculture et les mixes 
-#### For barley 
-#### For mustard
-#### Radish
-#### For Faba bean
-#### Fenugreek
 
 
-### Spad analysis for the second date 
+### Spad analysis for the second date -- j'ai mis les deux dates dans la première analyse 
 je ne vait pas le faire c'est juste un copier coller 
 
 ```{r}
