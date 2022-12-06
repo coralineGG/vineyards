@@ -25,10 +25,20 @@ merci_cc%>%
   ggplot (aes(x = reorder(Line, mymean), y = mymean, ymin=ymin, ymax=ymax)) + 
   geom_point()+
   geom_errorbar()+
-  labs(x="Line", y="Cover rate", title = "Percentage of coverance of the soil for different cover crops")
+  labs(x="Line", y="N quantity potentially returned to the soil", title = "Potentil release of N in the soil per treatment")
+
+#boxplot ## ne fonctionne 
+merci_cc%>%
+  group_by(Line)%>%
+  summarise(mymean=mean(merci_value, na.rm=T),
+            mysd=sd(merci_value, na.rm=T))%>%
+  mutate(ymax=mymean+mysd, ymin=mymean-mysd)%>%
+  ggplot()+
+  aes(x=reorder(Line mymean), y=merci_value, fill=Line, group=Line))+
+  geom_boxplot()
 
 #Anova line
-anova.merci<-lm(merci_value~Line, merci_cc)
+anova.merci<-lm(merci_value~Line+zone, merci_cc)
 anova(anova.merci)
 par(mfrow = c(1,1))
 plot(anova.merci)
@@ -38,4 +48,3 @@ table.letters.merci <- kruskal.merci$groups %>%
   rownames_to_column("line") %>%
   select(line, groups)
 view(table.letters.merci)
-

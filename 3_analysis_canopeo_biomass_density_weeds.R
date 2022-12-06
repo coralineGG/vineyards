@@ -13,7 +13,7 @@ view(canopeo_weed_ini)
 # we wanted to turn the column named "zone_X" into one 
 #in order for the data to be easier to analyse
 canopeo_weed <- canopeo_weed_ini%>%
-  select (date, line, z1, z2, z3,nature)%>%
+  select (date, line, z1, z2, z3,nature,treatment)%>%
   mutate(line = as.factor(line)) %>% 
   pivot_longer(cols = z1:z3, names_to = "zone",values_to = "weed_cover_rate" )
 view(canopeo_weed)
@@ -21,19 +21,13 @@ view(canopeo_weed)
 #Graph 
 library(ggplot2)
 
-#Anova pour létude des lignes
-anova.canopeo.l<-lm(weed_cover_rate~line, canopeo_weed)
-anova(anova.canopeo.l)
-par(mfrow = c(1,1))
-plot(anova.canopeo.l)
+#Anova line+zone
+anova.canopeo <-lm(weed_cover_rate~line+zone, canopeo_weed)
+anova(anova.canopeo)
+par(mfrow = c(2,2))
+plot(anova.canopeo)
 
-anova.canopeo.l.z <- lm(weed_cover_rate~line+zone, canopeo_weed)
-anova(anova.canopeo.l.z)
-summary(anova.canopeo.l.z)
-
-anova.canopeo.z<-lm(weed_cover_rate~zone, canopeo_weed)
-anova(anova.canopeo.z)
-summary(anova.canopeo.z)
+summary(anova.canopeo)
 
 # Kruskal
 kruskal <- kruskal(canopeo_weed$weed_cover_rate, canopeo_weed$line, console = T)
@@ -57,6 +51,11 @@ canopeo_weed%>%
   geom_errorbar()+
   labs(x="Line", y="Weed cover rate", title = "Percentage of weed soil coverance when different cover crops were grown")
 
+#essaie boxplot
+canopeo_weed%>%
+  ggplot()+
+  aes(x=line, y=weed_cover_rate,fill=line)+
+  geom_boxplot()
 
 # tukey.weed.3 <- HSD.test(anova.canopeo.l, "line", group = T, console = T)
 # print (tukey.weed.3)
@@ -82,7 +81,7 @@ canopeo_weed%>%
 canopeo_weed_1 <- canopeo_weed%>%
   mutate(weed_cover_rate=weed_cover_rate/100)
  
-anova.canopeo.z <- glm(weed_cover_rate~zone, canopeo_weed_1, family = "binomial") 
+anova.canopeo.z <- glm(weed_cover_rate~zone, canopeo_weed, family = "binomial") 
 anova(anova.canopeo.z)
 par(mfrow = c(1,1))
 plot(anova.canopeo.z)
@@ -123,6 +122,14 @@ treatment_cover_rate<-canopeo_weed%>%
 
 t.test(control_cover_rate$weed_cover_rate, treatment_cover_rate$weed_cover_rate)
 
+canopeo_weed%>%
+  
+#test graph 
+canopeo_weed%>%
+  ggplot()+
+  aes(x=(, line!=1), y=weed_cover_rate,fill=line)+
+  geom_boxplot()
+
 #t.test : comparing the mono to the mix
 mono_cover_rate<-canopeo_weed%>%
   filter(nature=="mono")
@@ -130,6 +137,13 @@ mix_cover_rate<-canopeo_weed%>%
   filter(nature=="mix")
 
 t.test(mono_cover_rate$weed_cover_rate, mix_cover_rate$weed_cover_rate)
+
+#test graph 
+canopeo_weed%>%
+  group_by(nature)%>%
+  ggplot()+
+  aes(x= nature, y=weed_cover_rate, fill=line)+
+  geom_boxplot()
 
 # lines <- c("6","7","8","11","14")
 # testfiltre <- canopeo_weed %>% 
@@ -175,12 +189,6 @@ plot(anova.biomass.l)
 # on ne fait pas de tukey"
 # p-value > 0,05 so no tuckey test
 
-# anova zones
-anova.biomass.z<-lm(weed_biomass~zone, biomass_weed)
-anova(anova.biomass.z)
-par(mfrow = c(1,1))
-plot(anova.biomass)
-# 
 #tukey test
 tukey.z<- HSD.test(anova.biomass.z, "zone", alpha = 0.05, group=TRUE, main = NULL,
                     console=FALSE)
@@ -247,7 +255,13 @@ weed_density%>%
   geom_errorbar()+
   labs(x="Line", y="Weed density", title = "Weed density per line 19 days after the sowing date")
 
-#Anova line 
+#boxplot 
+weed_density%>%
+  ggplot()+
+  aes(x=Line, y=weed_density, fill=Line, group=Line)+
+  geom_boxplot()
+
+#Anova
 anova.density.l<-glm(weed_density~Line+zone, weed_density, family='poisson')
 anova(anova.density.l)
 summary(anova.density.l)
