@@ -25,15 +25,22 @@ We want to answer to this theme of our project weed regulation and competition i
 library(tidyverse)
 library(ggplot2)
 library(agricolae)
+library(report)
 ```
 
 ### data importation 
 
 ```{r}
 LER.1= read.table("4_LER.csv", header = TRUE,sep = ";", dec = ",")
+line_content = read.table("Line_content.csv", header = TRUE, sep = ";", dec = ",")
+
+line_content%>%
+  mutate(Line=as.factor(Line))-> line_content
 
 LER<- LER.1%>%
-  mutate(Line = as.factor(Line))
+  mutate(Line = as.factor(Line))%>%
+  full_join(line_content)
+
 ```
 
 
@@ -46,21 +53,23 @@ graph of the values of LER in function of the treatment
 LER %>%
   filter( mono_mix == "mix") %>%
   filter (Specie != "Weed") %>%
-  group_by(Line)%>%
+  group_by(cover_crop)%>%
   summarise(mymean=mean(LER_cc, na.rm=T),
             mysd=sd(LER_cc, na.rm=T))%>%
   mutate(ymax=mymean+mysd, ymin=mymean-mysd) %>%
-  ggplot (aes(x = reorder(Line, mymean), y = mymean,
+  ggplot (aes(x = reorder(cover_crop, mymean), y = mymean,
               ymin=ymin, ymax=ymax, na.rm=T)) + 
   geom_point()+
   geom_errorbar()+
-  labs(x="Number of the treatment", y="LER value", title = "LER value in function of the treatment")
+  theme(axis.text.x = element_text(angle=45))+
+  geom_hline(yintercept=1, linetype="dashed", color = "red")+
+  labs(x="Cover crop mix", y="LER value", title = "LER value in function of the mix")
 
 ```
 choisir celui là parce que le boxplot on ne voit pas bien les petits points 
 
 
-Graph en boxplot 
+Graph en boxplot ==> ne va pas le mettre 
 
 ```{r}
 view(LER)
@@ -71,7 +80,7 @@ LER %>%
   group_by(Line)%>%
   #summarise(mymean=mean(LER_cc, na.rm=T))%>%
   ggplot ()+
-  aes(x = Line, y=LER_cc, fill=Line)+
+  aes(x = reorder(Line, LER_cc), y=LER_cc, fill=Line)+
   geom_boxplot()+
   labs(x="Number of treatment", y="LER value", title = "LER value in function of the treatment")
   
@@ -93,7 +102,13 @@ kruskal.LER.cc <- kruskal(LER$LER_cc, LER$Line,  console = T)
 no significantive difference 
 
 
+
 ### Analysis of the LERp for each specie between mix and monoculture -- NOT USEFUL AS SAID AURELIE
+
+#### Table with LER, LERP 
+un tableau
+
+
 
 #### Radish 
 
