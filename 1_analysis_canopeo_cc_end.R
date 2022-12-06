@@ -1,6 +1,6 @@
 # working directory
 getwd()
-setwd("/home/lucile/Bureau/Mpl Sup Agro/2A/project/vineyards")
+setwd("D:/études/SUPAGRO/2A/D4/github/vineyards")
 
 # library 
 library(tidyverse)
@@ -25,32 +25,43 @@ canopeo_cc%>%
   summarise(mymean=mean(cover_rate, na.rm=T),
             mysd=sd(cover_rate, na.rm=T))%>%
   mutate(ymax=mymean+mysd, ymin=mymean-mysd)%>%
-  ggplot (aes(x = reorder(Line, mymean), y = mymean, ymin=ymin, ymax=ymax)) + 
-  geom_point()+
-  geom_errorbar()+
+  ggplot ()+
+  aes(x = reorder(Line, mymean), y = mymean, fill=Line) + 
+  geom_boxplot()+
+  #geom_errorbar()+
   labs(x="Line", y="Cover rate", title = "Percentage of coverance of the soil for different cover crops")
 
 canopeo_cc%>%
+  group_by(Line)%>%
+  summarise(mymean=mean(cover_rate, na.rm=T),
+            mysd=sd(cover_rate, na.rm=T))%>%
+  mutate(ymax=mymean+mysd, ymin=mymean-mysd)%>%
   ggplot()+
-  aes(x=Line,y=cover_rate,fill=Line)+
+  aes(x=Line, y=cover_rate,fill=Line)+
   geom_boxplot()
-#Anova line
-anova.canopeo1.l<-lm(cover_rate~as.factor(Line), canopeo_cc)
-anova(anova.canopeo1.l)
-summary(anova.canopeo1.l)
+
+canopeo_cc%>%
+  ggplot()+
+  aes(x=Line, y=cover_rate,fill=Line)+
+  geom_boxplot()
+
+#Anova line+zone
+anova.canopeo1<-lm(cover_rate~as.factor(Line)+zone, canopeo_cc)
+anova(anova.canopeo1)
+summary(anova.canopeo1)
 par(mfrow = c(1,1))
 plot(anova.canopeo1.l)
 
 ## Our P-value is > 0,05 so we cannot do a tukey test
 
-#anova zone
-anova.canopeo1.z<-lm(cover_rate~zone, canopeo_cc)
-anova(anova.canopeo1.z)
-par(mfrow = c(1,1))
-plot(anova.canopeo1.z)
+# #anova zone
+# anova.canopeo1.z<-lm(cover_rate~zone, canopeo_cc)
+# anova(anova.canopeo1.z)
+# par(mfrow = c(1,1))
+# plot(anova.canopeo1.z)
 
 
-tukey.canopeo.1<- HSD.test(anova.canopeo1.z, "zone", alpha = 0.05, group=TRUE, main = NULL, console=FALSE)
+tukey.canopeo.1<- HSD.test(anova.canopeo1, "zone", alpha = 0.05, group=TRUE, main = NULL, console=FALSE)
 print(tukey.canopeo.1)
 table.letters.canopeo.1 <- tukey.canopeo.1$groups %>%
   rownames_to_column("zone") %>%
