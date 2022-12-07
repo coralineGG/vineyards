@@ -1,6 +1,6 @@
 # working directory
-# getwd()
-# setwd("D:/études/SUPAGRO/2A/D4/github/vineyards")
+getwd()
+setwd("D:/études/SUPAGRO/2A/D4/github/vineyards")
 
 # library 
 library(tidyverse)
@@ -21,6 +21,10 @@ view(canopeo_weed)
 #Graph 
 library(ggplot2)
 
+
+# ajouter les vérifications anova quand lisa trouve !!##
+
+
 #Anova line+zone
 anova.canopeo <-lm(weed_cover_rate~line+zone, canopeo_weed)
 anova(anova.canopeo)
@@ -36,9 +40,10 @@ table.letters.covers <- kruskal$groups %>%
   select(line, groups)%>%
   mutate(line=as.integer(line))
 view(table.letters.covers)
-#pas sur de ce à quoi ça sert...
-#est-ce que c'est pour grouper les lignes associée par le kruskal entre elles ?
+
+
 #dunn.test après un k test
+
 canopeo_weed%>%
   group_by(line)%>%
   summarise(mymean=mean(weed_cover_rate, na.rm=T),
@@ -54,7 +59,6 @@ canopeo_weed%>%
 
 #boxplot
 canopeo_weed.1<-canopeo_weed%>%
-  mutate(line=as.integer(line))%>%
   with(reorder(line, weed_cover_rate, median, na.rm=T))%>%
   full_join(table.letters.covers)
 view(canopeo_weed)
@@ -66,10 +70,9 @@ canopeo_weed.1%>%
   geom_boxplot()+
   labs(x="Treatment", y="weed cover rate in percentage", title = "Percentage of soil covered by weeds per treatment")
 
-
 canopeo_weed%>%
   ggplot()+
-  aes(x=reorder(line, weed_cover_rate, FUN=median), y=weed_cover_rate, fill=line)+
+  aes(x=reorder(line, weed_cover_rate, FUN=median, label = groups()), y=weed_cover_rate, fill=line)+
   geom_boxplot()+
   geom_text(aes(x=line, y=75, label=table.letters.covers$groups))+
   labs(x="Treatment", y="weed cover rate in percentage", title = "Percentage of soil covered by weeds per treatment")
@@ -160,18 +163,6 @@ biomass_weed <- biomass_weed_ini%>%
   mutate(line=as.factor(line))
 view(biomass_weed)
 
-#Graph 
-library(ggplot2)
-biomass_weed%>%
-  group_by(line)%>%
-  summarise(mymean=mean(weed_biomass, na.rm=T),
-            mysd=sd(weed_biomass, na.rm=T))%>%
-  mutate(ymax=mymean+mysd, ymin=mymean-mysd)%>%
-  ggplot (aes(x = reorder(line, mymean), y = mymean, ymin=ymin, ymax=ymax)) + 
-  geom_point()+
-  geom_errorbar()+
-  labs(x="Line", y="Weed biomass (g)", title = "Biomass of the weeds per line")
-
 #Anova line
 anova.biomass.l<-lm(weed_biomass~line+zone, biomass_weed)
 anova(anova.biomass.l)
@@ -187,7 +178,9 @@ biomass_weed$line<-with(biomass_weed, reorder(line, weed_biomass, median, na.rm=
 biomass_weed%>%
   ggplot()+
   aes(x=line, y=weed_biomass, fill=line)+
-  geom_boxplot()
+  geom_boxplot()+
+  theme(axis.text.x = element_text(angle=45))+
+  labs(x="Treatment", y="Weed biomass (g)", title = "Weed biomass measured for different cover crops")
 
 #tukey test
 tukey.z<- HSD.test(anova.biomass.l, "zone", alpha = 0.05, group=TRUE, main = NULL,
@@ -197,18 +190,6 @@ table.letters.biomass <- tukey.z$groups %>%
   rownames_to_column("zone") %>%
   select(zone, groups)
 view(table.letters.biomass)
-
-# biomass_weed%>%
-#   group_by(zone)%>%
-#   summarise(mymean=mean(weed_biomass, na.rm=T),
-#             mysd=sd(weed_biomass, na.rm=T))%>%
-#   mutate(ymax=mymean+mysd, ymin=mymean-mysd)%>%
-#   full_join(table.letters.biomass) %>% # ne finctionne pas
-#   ggplot (aes(x = reorder(zone, mymean), y = mymean, ymin=ymin, ymax=ymax, label= groups)) + 
-#   geom_point()+
-#   geom_text(aes(y=20))+
-#   geom_errorbar()+
-#   labs(x="Zone", y="Weed biomass", title = "Biomass of the weeds per line")
 
 #t.test : comparing the mono to the mix
 mono_biomass<-biomass_weed%>%
@@ -244,21 +225,14 @@ view(weed_density)
 
 #Graph 
 library(ggplot2)
-weed_density%>%
-  group_by(Line)%>%
-  summarise(mymean=mean(weed_density, na.rm=T),
-            mysd=sd(weed_density, na.rm=T))%>%
-  mutate(ymax=mymean+mysd, ymin=mymean-mysd)%>%
-  ggplot (aes(x = reorder(Line, mymean), y = mymean, ymin=ymin, ymax=ymax)) + 
-  geom_point()+
-  geom_errorbar()+
-  labs(x="Line", y="Weed density", title = "Weed density per line 19 days after the sowing date")
-
 #boxplot 
+weed_density$Line<-with(weed_density,reorder(Line, weed_density, median, na.rm=T))
 weed_density%>%
   ggplot()+
   aes(x=Line, y=weed_density, fill=Line, group=Line)+
-  geom_boxplot()
+  geom_boxplot()+
+  theme(axis.text.x = element_text(angle=45))+
+  labs(x="Treatment", y="Weed density (plant/250cm2)", title = "Weed density measured for different cover crops")
 
 #Anova
 anova.density.l<-glm(weed_density~Line+zone, weed_density, family='poisson')
@@ -296,19 +270,19 @@ plot(anova.biomass)
 #   geom_errorbar()+
 #   labs(x="Zone", y="Weed density", title = "density of the weeds per line")
 
-#t.test : comparing the control to all the treatments
-control_density<-weed_density%>%
-  filter(Line==1)
-treatment_density<-weed_density%>%
-  filter(Line!=1)
-
-t.test(control_density$weed_density, treatment_density$weed_density)
-#faire le grphique en groupant tout les treatment pour voir la variance 
-
 #t.test : comparing the mono to the mix
 mono_density<-weed_density%>%
-  filter(nature=="mono")
+  filter(nature=="monoculture")
 mix_density<-weed_density%>%
   filter(nature=="mix")
 
 t.test(mono_density$weed_density, mix_density$weed_density)
+
+#graph t-test
+weed_density$Line<-with(weed_density, reorder(Line,weed_density, median, na.rm=T))
+weed_density%>%
+  group_by(nature)%>%
+  ggplot()+
+  aes(x= nature, y=weed_density, fill=nature)+
+  geom_boxplot()+
+  labs(x="Treatment", y="Weed density (plant/250cm2)", title = "Comparision of the weed density measured for different cover crops in monoculture and in association")
