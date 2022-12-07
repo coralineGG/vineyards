@@ -41,6 +41,8 @@ LER<- LER.1%>%
   mutate(Line = as.factor(Line))%>%
   full_join(line_content)
 
+write.csv(LER, "LER_table_mean.csv")
+
 ```
 
 
@@ -106,8 +108,7 @@ no significantive difference
 ### Analysis of the LERp for each specie between mix and monoculture -- NOT USEFUL AS SAID AURELIE
 
 #### Table with LER, LERP 
-un tableau
-
+un tableau sur libre office 
 
 
 #### Radish 

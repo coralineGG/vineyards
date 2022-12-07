@@ -6,6 +6,7 @@ setwd("D:/études/SUPAGRO/2A/D4/github/vineyards")
 library(tidyverse)
 library(agricolae)
 library(car)
+library(ggplot2)
 
 # get the data
 canopeo_cc_ini = read.table("Data_collection_canopeo_cc_only.csv", header = TRUE, sep = ";", dec = ",")
@@ -21,7 +22,7 @@ canopeo_cc%>%
   mutate(Line=as.factor(Line))->canopeo_cc
 
 #Graph :
-library(ggplot2)
+
 canopeo_cc$Line<-with(canopeo_cc, reorder(Line, cover_rate, median, na.rm=T))
 canopeo_cc%>%
   ggplot()+
@@ -31,8 +32,8 @@ canopeo_cc%>%
   labs(x="Treatment", y="Cover rate in percentage", title = "Percentage of coverance of the soil for different cover crops")
 
 #fonctionne pas encore
-shapiro.test(cover_rate)
-leveneTest(cover_rate~as.factor(Line)+zone)
+shapiro.test(canopeo_cc$cover_rate)
+leveneTest(cover_rate~Line, data=canopeo_cc)
 
 #Anova line+zone
 anova.canopeo1<-lm(cover_rate~as.factor(Line)+zone, canopeo_cc)
@@ -40,6 +41,7 @@ anova(anova.canopeo1)
 summary(anova.canopeo1)
 par(mfrow = c(1,1))
 plot(anova.canopeo1)
+
 
 ## Our P-value is > 0,05 so we cannot do a tukey test
 
