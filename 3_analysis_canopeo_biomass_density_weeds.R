@@ -21,6 +21,10 @@ view(canopeo_weed)
 #Graph 
 library(ggplot2)
 
+
+# ajouter les vérifications anova quand lisa trouve !!##
+
+
 #Anova line+zone
 anova.canopeo <-lm(weed_cover_rate~line+zone, canopeo_weed)
 anova(anova.canopeo)
@@ -36,9 +40,10 @@ table.letters.covers <- kruskal$groups %>%
   select(line, groups)%>%
   mutate(line=as.integer(line))
 view(table.letters.covers)
-#pas sur de ce à quoi ça sert...
-#est-ce que c'est pour grouper les lignes associée par le kruskal entre elles ?
+
+
 #dunn.test après un k test
+
 canopeo_weed%>%
   group_by(line)%>%
   summarise(mymean=mean(weed_cover_rate, na.rm=T),
@@ -65,7 +70,6 @@ canopeo_weed.1%>%
   geom_text(aes(y = 75)) +
   geom_boxplot()+
   labs(x="Treatment", y="weed cover rate in percentage", title = "Percentage of soil covered by weeds per treatment")
-
 
 canopeo_weed%>%
   ggplot()+
@@ -160,18 +164,6 @@ biomass_weed <- biomass_weed_ini%>%
   mutate(line=as.factor(line))
 view(biomass_weed)
 
-#Graph 
-library(ggplot2)
-biomass_weed%>%
-  group_by(line)%>%
-  summarise(mymean=mean(weed_biomass, na.rm=T),
-            mysd=sd(weed_biomass, na.rm=T))%>%
-  mutate(ymax=mymean+mysd, ymin=mymean-mysd)%>%
-  ggplot (aes(x = reorder(line, mymean), y = mymean, ymin=ymin, ymax=ymax)) + 
-  geom_point()+
-  geom_errorbar()+
-  labs(x="Line", y="Weed biomass (g)", title = "Biomass of the weeds per line")
-
 #Anova line
 anova.biomass.l<-lm(weed_biomass~line+zone, biomass_weed)
 anova(anova.biomass.l)
@@ -187,7 +179,9 @@ biomass_weed$line<-with(biomass_weed, reorder(line, weed_biomass, median, na.rm=
 biomass_weed%>%
   ggplot()+
   aes(x=line, y=weed_biomass, fill=line)+
-  geom_boxplot()
+  geom_boxplot()+
+  theme(axis.text.x = element_text(angle=45))+
+  labs(x="Treatment", y="Weed biomass (g)", title = "Weed biomass measured for different cover crops")
 
 #tukey test
 tukey.z<- HSD.test(anova.biomass.l, "zone", alpha = 0.05, group=TRUE, main = NULL,
@@ -197,18 +191,6 @@ table.letters.biomass <- tukey.z$groups %>%
   rownames_to_column("zone") %>%
   select(zone, groups)
 view(table.letters.biomass)
-
-# biomass_weed%>%
-#   group_by(zone)%>%
-#   summarise(mymean=mean(weed_biomass, na.rm=T),
-#             mysd=sd(weed_biomass, na.rm=T))%>%
-#   mutate(ymax=mymean+mysd, ymin=mymean-mysd)%>%
-#   full_join(table.letters.biomass) %>% # ne finctionne pas
-#   ggplot (aes(x = reorder(zone, mymean), y = mymean, ymin=ymin, ymax=ymax, label= groups)) + 
-#   geom_point()+
-#   geom_text(aes(y=20))+
-#   geom_errorbar()+
-#   labs(x="Zone", y="Weed biomass", title = "Biomass of the weeds per line")
 
 #t.test : comparing the mono to the mix
 mono_biomass<-biomass_weed%>%
