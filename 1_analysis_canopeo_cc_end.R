@@ -27,6 +27,7 @@ canopeo_cc%>%
   ggplot()+
   aes(x=Line, y=cover_rate, fill=Line)+
   geom_boxplot()+
+  theme(axis.text.x = element_text(angle=45))
   labs(x="Treatment", y="Cover rate in percentage", title = "Percentage of coverance of the soil for different cover crops")
 
 #fonctionne pas encore
