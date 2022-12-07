@@ -1,6 +1,6 @@
 # working directory
-# getwd()
-# setwd("D:/études/SUPAGRO/2A/D4/github/vineyards")
+getwd()
+setwd("D:/études/SUPAGRO/2A/D4/github/vineyards")
 
 # library 
 library(tidyverse)
@@ -59,7 +59,6 @@ canopeo_weed%>%
 
 #boxplot
 canopeo_weed.1<-canopeo_weed%>%
-  mutate(line=as.integer(line))%>%
   with(reorder(line, weed_cover_rate, median, na.rm=T))%>%
   full_join(table.letters.covers)
 view(canopeo_weed)
@@ -73,7 +72,7 @@ canopeo_weed.1%>%
 
 canopeo_weed%>%
   ggplot()+
-  aes(x=reorder(line, weed_cover_rate, FUN=median), y=weed_cover_rate, fill=line)+
+  aes(x=reorder(line, weed_cover_rate, FUN=median, label = groups()), y=weed_cover_rate, fill=line)+
   geom_boxplot()+
   geom_text(aes(x=line, y=75, label=table.letters.covers$groups))+
   labs(x="Treatment", y="weed cover rate in percentage", title = "Percentage of soil covered by weeds per treatment")
@@ -226,21 +225,14 @@ view(weed_density)
 
 #Graph 
 library(ggplot2)
-weed_density%>%
-  group_by(Line)%>%
-  summarise(mymean=mean(weed_density, na.rm=T),
-            mysd=sd(weed_density, na.rm=T))%>%
-  mutate(ymax=mymean+mysd, ymin=mymean-mysd)%>%
-  ggplot (aes(x = reorder(Line, mymean), y = mymean, ymin=ymin, ymax=ymax)) + 
-  geom_point()+
-  geom_errorbar()+
-  labs(x="Line", y="Weed density", title = "Weed density per line 19 days after the sowing date")
-
 #boxplot 
+weed_density$Line<-with(weed_density,reorder(Line, weed_density, median, na.rm=T))
 weed_density%>%
   ggplot()+
   aes(x=Line, y=weed_density, fill=Line, group=Line)+
-  geom_boxplot()
+  geom_boxplot()+
+  theme(axis.text.x = element_text(angle=45))+
+  labs(x="Treatment", y="Weed density (plant/250cm2)", title = "Weed density measured for different cover crops")
 
 #Anova
 anova.density.l<-glm(weed_density~Line+zone, weed_density, family='poisson')
@@ -278,19 +270,19 @@ plot(anova.biomass)
 #   geom_errorbar()+
 #   labs(x="Zone", y="Weed density", title = "density of the weeds per line")
 
-#t.test : comparing the control to all the treatments
-control_density<-weed_density%>%
-  filter(Line==1)
-treatment_density<-weed_density%>%
-  filter(Line!=1)
-
-t.test(control_density$weed_density, treatment_density$weed_density)
-#faire le grphique en groupant tout les treatment pour voir la variance 
-
 #t.test : comparing the mono to the mix
 mono_density<-weed_density%>%
-  filter(nature=="mono")
+  filter(nature=="monoculture")
 mix_density<-weed_density%>%
   filter(nature=="mix")
 
 t.test(mono_density$weed_density, mix_density$weed_density)
+
+#graph t-test
+weed_density$Line<-with(weed_density, reorder(Line,weed_density, median, na.rm=T))
+weed_density%>%
+  group_by(nature)%>%
+  ggplot()+
+  aes(x= nature, y=weed_density, fill=nature)+
+  geom_boxplot()+
+  labs(x="Treatment", y="Weed density (plant/250cm2)", title = "Comparision of the weed density measured for different cover crops in monoculture and in association")
