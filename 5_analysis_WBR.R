@@ -1,6 +1,6 @@
 # WEED BIOMASS RATIO (WBR)
 getwd()
-setwd("C:/Users/lizet/OneDrive/Datos adjuntos/Documentos/GitHub/vineyards")
+setwd("D:/études/SUPAGRO/2A/D4/github/vineyards")
 
 # library 
 library(tidyverse)
@@ -8,7 +8,7 @@ library(agricolae)
 
 # get the data for the cover rate
 
-weed_biomass = read.table("WBR_Weed.csv", header = TRUE, sep = ",", dec = ".")
+weed_biomass = read.table("5_WBR_Weed.csv", header = TRUE, sep = ",", dec = ".")
 view(weed_biomass)
 # we wanted to turn the column named "zone_X" into one 
 #in order for the data to be easier to analyse

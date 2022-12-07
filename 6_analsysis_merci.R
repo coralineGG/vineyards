@@ -25,7 +25,7 @@ merci_cc%>%
   ggplot (aes(x = reorder(Line, mymean), y = mymean, ymin=ymin, ymax=ymax)) + 
   geom_point()+
   geom_errorbar()+
-  labs(x="Line", y="N quantity potentially returned to the soil", title = "Potentil release of N in the soil per treatment")
+  labs(x="Line", y="N quantity potentially returned to the soil", title = "Potential release of N in the soil per treatment in Kg/ha")
 
 #boxplot ## ne fonctionne 
 merci_cc%>%
