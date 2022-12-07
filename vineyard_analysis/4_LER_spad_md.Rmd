@@ -447,6 +447,9 @@ posthock.spad.all <- kruskal.spad.all$groups %>%
   select(Line, groups)%>%
   mutate(Line= as.factor(Line))
 
+spad$Line<-with(spad, reorder(Line, spad_value, median, na.rm=T))
+
+
 spad%>%
   group_by(Line)%>%
   full_join(posthock.spad.all)%>%
