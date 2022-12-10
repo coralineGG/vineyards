@@ -50,9 +50,9 @@ weed_wbr%>%
   ggplot (aes(x = reorder(line, mymean), y = mymean, label = groups,
               ymin=ymin, ymax=ymax)) + 
   geom_point()+
-  geom_text(aes(y = 10)) +
+  geom_text(aes(y = 9)) +
   geom_errorbar()+
-  labs(x="Line", y="Weed biomass ratio", title = "Add title")
+  labs(x="Traitments", y="Weed biomass ratio (WBR)", title = "Weed regulation with cover crops")
 
 
 
