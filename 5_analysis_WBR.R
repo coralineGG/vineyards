@@ -27,13 +27,10 @@ weed_wbr%>%
   ggplot (aes(x = line, y = weed_biomass_ratio, ymin=0, ymax=10, xmin=1, xmax=14)) + 
   geom_point()
 
-#Anova
-anova.wbr<-lm(weed_biomass_ratio~line, weed_wbr)
-anova(anova.wbr)
-
-par(mfrow = c(2,2))
-plot(anova.wbr)
-par(mfrow = c(1,1))
+#verification before the anova 
+shapiro.test(weed_wbr$weed_biomass_ratio)
+#p-value = 4.543e-09
+# can't do an anova because not normality of values 
 
 # Kruskal
 kruskal <- kruskal(weed_wbr$weed_biomass_ratio, weed_wbr$line, console = T)

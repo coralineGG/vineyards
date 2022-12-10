@@ -1,7 +1,7 @@
 # working directory
 getwd()
 #setwd("/home/lucile/Bureau/Mpl Sup Agro/2A/project/vineyards")
-setwd("C:/Users/vallet/Documents/Doctorat/Enseignement/Supagro_stat/Cover_crop/")
+#setwd("C:/Users/vallet/Documents/Doctorat/Enseignement/Supagro_stat/Cover_crop/")
 # library 
 library(tidyverse)
 library(agricolae)
@@ -9,7 +9,9 @@ library(lubridate)
 
 # get the data
 canopeo_cc_ini = read.table("2_canopeo_time.csv", header = TRUE, sep = ";", dec = ",")
-view(canopeo_cc_ini)
+
+line_content = read.table("vineyard_analysis/Line_content.csv", header = TRUE, sep = ";", dec = ",")
+
 # we wanted to turn the column named "zone_X" into one 
 #in order for the data to be easier to analyse
 canopeo_cc <- canopeo_cc_ini%>%
@@ -59,25 +61,40 @@ for (line in 1:14) {
 data <-
   map(List_model,
       ~ cbind(
-        "line" = .$line,
+        "Line" = .$line,
         "date" = .$date,
         "cover_rate" = .$cover_rate
       ))
 data <- as.data.frame(reduce(data, rbind))
 
-#Extract predctions
+#put the content of the lines in data table
+line_content%>%
+  mutate(Line=as.factor(Line))-> line_content
+
+data %>%
+  mutate(Line = as.factor(Line))%>%
+  full_join(line_content) -> data
+
+#Extract predictions
 predicted <-
   map(List_model,
       ~ cbind(
-        "line" = .$line,
+        "Line" = .$line,
         "x_seq" = .$x_seq,
         "prediction" = .$prediction
       ))
+
 predicted <- as.data.frame(reduce(predicted, rbind))
+
+#put the content of the lines in the table predicted
+predicted %>%
+  mutate(Line = as.factor(Line))%>%
+  full_join(line_content) -> predicted
+
 
 #Extract model parameters
 param<- map(List_model,
-            ~ c("line" = .$line,
+            ~ c("Line" = .$line,
                 "Model_SlopeAtMidpoint"=.$Model_SlopeAtMidpoint,
                 "Model_TranslationFrom0"=.$Model_TranslationFrom0))
 param<-bind_rows(param)
@@ -87,13 +104,16 @@ ggplot() +
   geom_point(data = data,
              aes(x = date,
                  y = cover_rate,
-                 color = as.factor(line))) +
+                 color = cover_crop)) +
   geom_line(data = predicted,
             aes(x = x_seq,
                 y = prediction,
-                color = as.factor(line))) +
+                color = cover_crop)) +
   theme_minimal()+
-  xlim(276,311)
+  xlim(276,311)+
+  labs(x="Time", y="Cover rate", 
+       title = "Evolution of the cover rate in the time of our experiment")
+  
 
 #Draw it on end of year
 ggplot() +

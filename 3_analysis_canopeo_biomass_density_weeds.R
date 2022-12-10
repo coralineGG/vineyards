@@ -5,12 +5,15 @@ setwd("D:/études/SUPAGRO/2A/D4/github/vineyards")
 # library 
 library(tidyverse)
 library(agricolae)
+library(ggplot2)
+library(car)
 
 
 # get the data for the cover rate
 canopeo_weed_ini = read.table("data_canopeo_weeds.csv", header = TRUE, sep = ";", dec = ",")
 view(canopeo_weed_ini)
-# we wanted to turn the column named "zone_X" into one 
+
+# we wanted to turn the column named "zone_X" into one : pivot  
 #in order for the data to be easier to analyse
 canopeo_weed <- canopeo_weed_ini%>%
   select (date, line, z1, z2, z3,nature,treatment)%>%
@@ -18,12 +21,27 @@ canopeo_weed <- canopeo_weed_ini%>%
   pivot_longer(cols = z1:z3, names_to = "zone",values_to = "weed_cover_rate" )
 view(canopeo_weed)
 
-#Graph 
-library(ggplot2)
+# get the content of each line 
+line_content = read.table("vineyard_analysis/Line_content.csv", header = TRUE, sep = ";", dec = ",")
 
+view(line_content)
+
+line_content%>%
+  mutate(Line=as.factor(Line))
+
+#Graph 
 
 # ajouter les vérifications anova quand lisa trouve !!##
+#shapiro for normality 
+shapiro.test(canopeo_weed$weed_cover_rate)
+#normality of the values 
 
+#levene for homogeneity of variance
+leveneTest(weed_cover_rate~line, canopeo_weed)
+#ok for the lines, the variances are homogene 
+leveneTest(weed_cover_rate~zone, canopeo_weed)
+#ok for the zones, the variances are homogene
+## we can do an anova
 
 #Anova line+zone
 anova.canopeo <-lm(weed_cover_rate~line+zone, canopeo_weed)
@@ -33,14 +51,21 @@ plot(anova.canopeo)
 
 summary(anova.canopeo)
 
+# je ne suis pas sure qu'il faille faire un kruskal si ertaines modalités sont significatives à l'anova 
 # Kruskal
-kruskal <- kruskal(canopeo_weed$weed_cover_rate, canopeo_weed$line, console = T)
-table.letters.covers <- kruskal$groups %>%
-  rownames_to_column("line") %>%
-  select(line, groups)%>%
-  mutate(line=as.integer(line))
-view(table.letters.covers)
+# kruskal <- kruskal(canopeo_weed$weed_cover_rate, canopeo_weed$line, console = T)
+# table.letters.covers <- kruskal$groups %>%
+#   rownames_to_column("line") %>%
+#   select(line, groups)%>%
+#   mutate(line=as.integer(line))
+# view(table.letters.covers)
 
+#tukey parce que anova significative pour certains treatments 
+tukey.weed.line <- HSD.test(anova.canopeo, "line", group = T, console = T)
+# pas de différence entre les treatments 
+
+#tukey car anova significative pour les differentes zones 
+tukey.weed.zone <- HSD.test(anova.canopeo, "zone", group = T, console = T)
 
 #dunn.test après un k test
 
