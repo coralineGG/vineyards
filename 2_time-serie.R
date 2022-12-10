@@ -99,6 +99,11 @@ param<- map(List_model,
                 "Model_TranslationFrom0"=.$Model_TranslationFrom0))
 param<-bind_rows(param)
 
+param %>%
+  mutate(Line = as.factor(Line))%>%
+  full_join(line_content) -> param
+view(param)
+
 #Draw it on actual values
 ggplot() +
   geom_point(data = data,
@@ -127,4 +132,14 @@ ggplot() +
                 color = as.factor(line))) +
   theme_minimal()+
   xlim(c(250,365))
+
+#slopes 
+slope<-param%>%
+  select( Model_SlopeAtMidpoint.b, cover_crop)
+
+write.csv(slope, "slope.csv")
+
+
+
+
 
