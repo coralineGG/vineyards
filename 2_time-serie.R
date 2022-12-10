@@ -137,7 +137,8 @@ ggplot() +
 slope<-param%>%
   select( Model_SlopeAtMidpoint.b, cover_crop)
 
-write.csv(slope, "slope.csv")
+view(slope)
+write.csv(slope, "2_slope.csv")
 
 
 
