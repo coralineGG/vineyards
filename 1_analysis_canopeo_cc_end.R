@@ -18,32 +18,32 @@ canopeo_cc <- canopeo_cc_ini%>%
   pivot_longer(cols = Z1:Z3, names_to = "zone",values_to = "cover_rate" )
 view(canopeo_cc)
 
-canopeo_cc%>%
-  mutate(Line=as.factor(Line))->canopeo_cc
+line_content = read.table("vineyard_analysis/Line_content.csv", header = TRUE, sep = ";", dec = ",")
 
-#Graph :
+line_content%>%
+  mutate(Line=as.factor(Line))-> line_content
 
-canopeo_cc$Line<-with(canopeo_cc, reorder(Line, cover_rate, median, na.rm=T))
 canopeo_cc%>%
-  ggplot()+
-  aes(x=Line, y=cover_rate, fill=Line)+
-  geom_boxplot()+
-  theme(axis.text.x = element_text(angle=45))
-  labs(x="Treatment", y="Cover rate in percentage", title = "Percentage of coverance of the soil for different cover crops")
+  mutate(Line=as.factor(Line))%>%
+  full_join(line_content)->canopeo_cc
+
+view(canopeo_cc)
+
+
+
 
 #fonctionne pas encore
-shapiro.test(canopeo_cc$cover_rate)
-leveneTest(cover_rate~Line, data=canopeo_cc)
+shapiro.test(canopeo_cc$cover_rate) # normality of values 
+leveneTest(cover_rate~Line, data=canopeo_cc) # homogenity of varances 
 
 #Anova line+zone
-anova.canopeo1<-lm(cover_rate~as.factor(Line)+zone, canopeo_cc)
+anova.canopeo1<-lm(cover_rate~Line+zone, canopeo_cc)
 anova(anova.canopeo1)
 summary(anova.canopeo1)
 par(mfrow = c(1,1))
 plot(anova.canopeo1)
 
-
-## Our P-value is > 0,05 so we cannot do a tukey test
+## Our P-value is < 0,05 so we can do a tukey test
 
 # #anova zone
 # anova.canopeo1.z<-lm(cover_rate~zone, canopeo_cc)
@@ -58,3 +58,27 @@ table.letters.canopeo.1 <- tukey.canopeo.1$groups %>%
   rownames_to_column("zone") %>%
   select(zone, groups)
 view(table.letters.canopeo.1)
+
+# tukey for the lines 
+
+tukey.canopeo.line<- HSD.test(anova.canopeo1, "Line", alpha = 0.05, group=TRUE, main = NULL, console=FALSE)
+print(tukey.canopeo.line)
+table.letters.canopeo.line <- tukey.canopeo.line$groups %>%
+  rownames_to_column("Line") %>%
+  select(Line, groups)
+view(table.letters.canopeo.line)
+
+#graph 
+
+canopeo_cc$cover_crop<-with(canopeo_cc, reorder(cover_crop, cover_rate, median, na.rm=T))
+canopeo_cc%>%
+  full_join(table.letters.canopeo.line)%>%
+  ggplot()+
+  aes(x=cover_crop, y=cover_rate, fill=cover_crop, label=groups)+
+  geom_text(aes(y=-10))+
+  geom_boxplot()+
+  theme(axis.text.x = element_text(angle=45), legend.position='none')+
+  labs(x="Treatment", y="Cover rate in percentage", title = "Cover rate for different cover crops treatments")
+
+
+
