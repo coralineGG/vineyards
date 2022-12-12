@@ -33,7 +33,7 @@ view(canopeo_cc)
 
 
 #fonctionne pas encore
-shapiro.test(canopeo_cc$cover_rate) # normality of values 
+shapiro.test(canopeo_cc$cover_rate) # not normality of values 
 leveneTest(cover_rate~Line, data=canopeo_cc) # homogenity of varances 
 
 #Anova line+zone
