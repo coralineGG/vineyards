@@ -10,13 +10,12 @@ library(ggplot2)
 
 # get the data
 canopeo_cc_ini = read.table("Data_collection_canopeo_cc_only.csv", header = TRUE, sep = ";", dec = ",")
-view(canopeo_cc_ini)
+
 # we wanted to turn the column named "zone_X" into one 
 #in order for the data to be easier to analyse
 canopeo_cc <- canopeo_cc_ini%>%
   select (Line, Z1, Z2, Z3)%>%
   pivot_longer(cols = Z1:Z3, names_to = "zone",values_to = "cover_rate" )
-view(canopeo_cc)
 
 line_content = read.table("vineyard_analysis/Line_content.csv", header = TRUE, sep = ";", dec = ",")
 
@@ -26,10 +25,6 @@ line_content%>%
 canopeo_cc%>%
   mutate(Line=as.factor(Line))%>%
   full_join(line_content)->canopeo_cc
-
-view(canopeo_cc)
-
-
 
 
 #fonctionne pas encore
@@ -78,6 +73,7 @@ canopeo_cc%>%
   geom_text(aes(y=-10))+
   geom_boxplot()+
   theme(axis.text.x = element_text(angle=45), legend.position='none')+
+  geom_hline(yintercept=50, linetype="dashed", color = "red")+
   labs(x="Treatment", y="Cover rate in percentage", title = "Cover rate for different cover crops treatments")
 
 

@@ -41,6 +41,8 @@ LER<- LER.1%>%
   mutate(Line = as.factor(Line))%>%
   full_join(line_content)
 
+view(LER)
+
 write.csv(LER, "LER_table_mean.csv")
 
 ```

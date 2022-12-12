@@ -1,38 +1,38 @@
 Line ;Specie ;nature;Z1;Z2;Z3 
 Control;Weed;mix;12;22;33
-O+M;Barley;mix;11;24;29
-O+M;Mustard;mix;9;12;12
-O+M;Weed;mix;20;0;25
-R+FN;Radish;mix;7;9;6
-R+FN;Fenugreek;mix;2;11;12
-R+FN;Weed;mix;35;5;45
-M+O+FV;Barley;mix;10;20;7
-M+O+FV;Faba bean;mix;3;4;3
-M+O+FV;Mustard;mix;0;0;8
-M+O+FV;Weed;mix;31;24;31
-O+FV;Barley;mix;27;28;12
-O+FV;Faba bean;mix;1;6;5
-O+FV;Weed;mix;41;4;33
-O;Barley;monoculture;54;29;44
-O;Weed;monoculture;22;8;6
+B+M;Barley;mix;11;24;29
+B+M;Mustard;mix;9;12;12
+B+M;Weed;mix;20;0;25
+R+Fn;Radish;mix;7;9;6
+R+Fn;Fenugreek;mix;2;11;12
+R+Fn;Weed;mix;35;5;45
+M+B+Fb;Barley;mix;10;20;7
+M+B+Fb;Faba bean;mix;3;4;3
+M+B+Fb;Mustard;mix;0;0;8
+M+B+Fb;Weed;mix;31;24;31
+B+Fb;Barley;mix;27;28;12
+B+Fb;Faba bean;mix;1;6;5
+B+Fb;Weed;mix;41;4;33
+B ;Barley;monoculture;54;29;44
+B ;Weed;monoculture;22;8;6
 R;Radish;monoculture;7;13;14
 R;Weed;monoculture;25;3;38
-FN;Fenugreek;monoculture;26;11;25
-FN;Weed;monoculture;25;9;19
-R+O;Radish;mix;7;7;17
-R+O;Barley;mix;14;21;27
-R+O;Weed;mix;48;7;74
-O+FN;Fenugreek;mix;10;7;8
-O+FN;Barley;mix;11;18;19
-O+FN;Weed;mix;23;3;16
-FV;Faba bean;monoculture;4;16;9
-FV;Weed;monoculture;26;2;18
-M+FV;Mustard;mix;9;7;6
-M+FV;Faba bean;mix;2;7;5
-M+FV;Weed;mix;37;3;26
-R+O+FN;Radish;mix;0;0;0
-R+O+FN;Barley;mix;1;1;1
-R+O+FN;Fenugreek;mix;5;8;8
-R+O+FN;Weed;mix;30;52;31
+Fn;Fenugreek;monoculture;26;11;25
+Fn;Weed;monoculture;25;9;19
+R+B;Radish;mix;7;7;17
+R+B;Barley;mix;14;21;27
+R+B;Weed;mix;48;7;74
+B+Fn;Fenugreek;mix;10;7;8
+B+Fn;Barley;mix;11;18;19
+B+Fn;Weed;mix;23;3;16
+Fb;Faba bean;monoculture;4;16;9
+Fb;Weed;monoculture;26;2;18
+M+Fb;Mustard;mix;9;7;6
+M+Fb;Faba bean;mix;2;7;5
+M+Fb;Weed;mix;37;3;26
+R+B+Fn;Radish;mix;0;0;0
+R+B+Fn;Barley;mix;1;1;1
+R+B+Fn;Fenugreek;mix;5;8;8
+R+B+Fn;Weed;mix;30;52;31
 M;Mustard;monoculture;30;45;32
 M;Weed;monoculture;49;43;21

@@ -94,6 +94,7 @@ canopeo_weed%>%
 
 biomass_weed_ini = read.table("3_weed_biomass.csv", header = TRUE, sep = ";", dec = ",")
 
+view(biomass_weed_ini)
 # we wanted to turn the column named "zone_X" into one 
 #in order for the data to be easier to analyse
 biomass_weed <- biomass_weed_ini%>%
@@ -189,6 +190,7 @@ plot(anova.density.l)
 # tukey
 tukey.density.l<- HSD.test(anova.density.l, "Line", alpha = 0.05, group=TRUE, main = NULL,
                    console=FALSE)
+print(tukey.density.l)
 
 table.letters.density <- tukey.density.l$groups %>%
   rownames_to_column("Line") %>%
@@ -198,7 +200,6 @@ view(table.letters.density)
 #Graph 
 #boxplot 
 
-weed_density$Line<-with(weed_density,reorder(Line, weed_density, median, na.rm=T))
 weed_density%>%
   full_join(table.letters.density)%>%
   ggplot()+
